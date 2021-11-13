@@ -1,4 +1,5 @@
 package UserSystem;
+import ParkingLot.Lot;
 
 public class Admin {
 	int AdminId;
@@ -10,7 +11,9 @@ public class Admin {
 		this.AdminPassword = hashing(password);
 	}
 	
-	
+	public void changePriceAdmin(int price, Lot thelot) {
+		thelot.changePrice(price);
+	}
 	
 	public static String hashing(String password) {
 		return password;

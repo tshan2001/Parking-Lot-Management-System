@@ -5,6 +5,14 @@ public class Spot {
 	boolean availabilty;
 	boolean disability;
 	boolean compact;
+	
+	public Spot() {
+		this.SpotId = -1;
+		this.availabilty = false;
+		this.disability = false;
+		this.compact = false;
+	}
+
 
 	public Spot(int i, boolean disa, boolean comp) {
 		this.SpotId = i;
