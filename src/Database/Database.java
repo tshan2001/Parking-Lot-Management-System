@@ -1,16 +1,25 @@
 package Database;
 import UserSystem.RegisteredUser;
+import java.util.HashMap;
 import UserSystem.Admin;
-import ParkingLot.Lot;
 
 public class Database {
-	RegisteredUser[] RegisteredUserDatabase;
-	Admin[] AdminDatabase;
-	Lot theParkingLot;
+	HashMap<String,Admin> AdminDatabase = new HashMap<String,Admin>();
+	HashMap<String,RegisteredUser> UserDatabase = new HashMap<String,RegisteredUser>();
 	
-	public Database() {
-		this.AdminDatabase = new Admin[10];
-		this.RegisteredUserDatabase = new RegisteredUser[200];
-		this.theParkingLot = new Lot();
+	public Database(){
+		String sudo_id = "thelot";
+		String sudo_pwd = "12345";
+		Admin sudo = new Admin(sudo_id,sudo_pwd);
+		AdminDatabase.put((sudo_id+sudo_pwd),sudo);
 	}
+	
+	protected HashMap<String,RegisteredUser> getUsers(){
+		return UserDatabase;
+	}
+	
+	protected HashMap<String,Admin> getAdmins(){
+		return AdminDatabase;
+	}
+	
 }

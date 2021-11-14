@@ -2,7 +2,6 @@ package UserSystem;
 import ParkingLot.Lot;
 
 public class Admin {
-	int AdminId;
 	String AdminUsername;
 	String AdminPassword;
 	

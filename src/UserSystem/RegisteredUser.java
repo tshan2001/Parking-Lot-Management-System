@@ -4,7 +4,6 @@ public class RegisteredUser {
 	
 	public int maxicars = 3;
 	
-	int userid;
 	String username;
 	String password;
 	String email;
@@ -21,7 +20,6 @@ public class RegisteredUser {
 		this.email = email;
 		this.unitNum = unit;
 		this.membership = false;
-		this.userid = -1;
 		this.cars = new Vehicle[maxicars];
 		this.numCars = 0;
 		for (int i=0; i<maxicars;i++) {
