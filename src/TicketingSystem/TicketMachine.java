@@ -68,9 +68,9 @@ public class TicketMachine {
         }
     }
 
-    public Ticket oneTimeParking(String type) {
-        Ticket ticket = new Ticket(this.lot);
-        if (type.equals("Reg")){
+    public Ticket oneTimeParking(int type) {
+        Ticket ticket = new Ticket(this.lot, type);
+        if (type == 0){
             if (this.avaliableReg > 0) {
                 this.avaliableReg--;
                 return ticket;
@@ -79,7 +79,7 @@ public class TicketMachine {
                 System.out.println("There's no regular parking spot available, please try other types");
             }
         }
-        else if (type.equals("Disa")){
+        else if (type == 1){
             if (this.avaliableDisa > 0) {
                 this.avaliableDisa--;
                 return ticket;
@@ -88,7 +88,7 @@ public class TicketMachine {
                 System.out.println("There's no disability parking spot available, please try other types");
             }
         }
-        else if (type.equals("Comp")){
+        else if (type == 2){
             if (this.avaliableComp > 0) {
                 this.avaliableComp--;
                 return ticket;                
@@ -99,7 +99,7 @@ public class TicketMachine {
         }
         return null;
     }
-    
+
     public void registeredLeave(Key key, String type){
         if (this.database.userExists(key.getUserName())){
             if (type.equals("Reg")){
