@@ -18,7 +18,6 @@ public class RegisteredUser {
 	int leasePeriod;
 
 
-
 	public RegisteredUser() {
 		this.disability = "Unkown";
 		this.username = "None";
