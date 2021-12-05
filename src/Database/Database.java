@@ -28,16 +28,16 @@ public class Database {
 
 
 	/* --- User Database Functions --- */
-	protected HashMap<String,RegisteredUser> getUsers(){
+	public HashMap<String,RegisteredUser> getUsers(){
 		return UserDatabase;
 	}
 
-	protected RegisteredUser getUser(String userName) {
+	public RegisteredUser getUser(String userName) {
 		return UserDatabase.get(userName);
 	}
 
 	/* Check if the user exists in the user database */
-	protected boolean userExists(String userToCheck) {
+	public boolean userExists(String userToCheck) {
 		return UserDatabase.containsKey(userToCheck);
 	}
 
@@ -45,7 +45,7 @@ public class Database {
 	 * set the key of the hash map to be the username
 	 * if user already exists, return false
 	 */
-	protected boolean addUser(RegisteredUser userToAdd) {
+	public boolean addUser(RegisteredUser userToAdd) {
 		if(this.userExists(userToAdd.getUserName)) {
 			return false;
 		}
@@ -53,7 +53,7 @@ public class Database {
 		return true;
 	}
 
-	protected boolean removeUser(RegisteredUser userToDelete) {
+	public boolean removeUser(RegisteredUser userToDelete) {
 		RegisteredUser removed = this.UserDatabase.remove(userToDelete.getUserName());
 		if (removed==null) {
 			return false;
@@ -61,7 +61,7 @@ public class Database {
 		return true;
 	}
 
-	protected boolean userUpdatePwd(String userToUpdate, String pwd) {
+	public boolean userUpdatePwd(String userToUpdate, String pwd) {
 		if(this.userExists(userToUpdate)) {
 			this.getUser(userToUpdate).setNewPassword(pwd);
 			return true;
@@ -70,16 +70,16 @@ public class Database {
 	}
 
 	/* --- Admin Database Functions --- */
-	protected HashMap<String,Admin> getAdmins(){
+	public HashMap<String,Admin> getAdmins(){
 		return AdminDatabase;
 	}
 
-	protected Admin getAdmin(String userName) {
+	public Admin getAdmin(String userName) {
 		return AdminDatabase.get(userName);
 	}
 
 	/* Check if the admin exists in the user database */
-	protected boolean adminExists(String userName) {
+	public boolean adminExists(String userName) {
 		return AdminDatabase.containsKey(userName);
 	}
 
@@ -87,7 +87,7 @@ public class Database {
 	 * set the key of the hash map to be the username
 	 * if user already exists, return false
 	 */
-	protected boolean addAdmin(Admin adminToAdd) {
+	public boolean addAdmin(Admin adminToAdd) {
 		if(this.adminExists(adminToAdd.getUserName())) {
 			return false;
 		}
@@ -95,7 +95,7 @@ public class Database {
 		return true;
 	}
 
-	protected boolean removeAdmin(Admin adminToDelete) {
+	public boolean removeAdmin(Admin adminToDelete) {
 		Admin removed = this.AdminDatabase.remove(adminToDelete.getUserName());
 		if (removed==null) {
 			return false;
@@ -103,7 +103,7 @@ public class Database {
 		return true;
 	}
 
-	protected boolean adminUpdatePwd(String adminToUpdate, String pwd) {
+	public boolean adminUpdatePwd(String adminToUpdate, String pwd) {
 		if(this.adminExists(adminToUpdate)) {
 			this.getAdmin(adminToUpdate).updatePwd(pwd);
 			return true;
@@ -113,11 +113,11 @@ public class Database {
 
 
 	/* --- Database Class Functions --- */
-	protected boolean adminDatabaseIsEmpty() {
+	public boolean adminDatabaseIsEmpty() {
 		return this.AdminDatabase.isEmpty();
 	}
 
-	protected boolean userDatabaseIsEmpty() {
+	public boolean userDatabaseIsEmpty() {
 		return this.UserDatabase.isEmpty();
 	}
 }
