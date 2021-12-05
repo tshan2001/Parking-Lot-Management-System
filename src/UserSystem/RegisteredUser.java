@@ -59,7 +59,7 @@ public class RegisteredUser {
 	
 	public void memberRegister(Key Key) {
 		this.membership = true;
-		this.Key
+		this.Key = Key;
 	}
 	puclic Key getMemberKey(){
 		return this.Key;
@@ -67,6 +67,7 @@ public class RegisteredUser {
 	
 	public void cancel() {
 		this.membership = false;
+		this.Key = null;
 	}
 	public String getAccount(){
 		return this.username;
