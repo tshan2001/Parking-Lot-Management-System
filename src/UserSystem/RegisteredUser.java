@@ -69,7 +69,7 @@ public class RegisteredUser {
 		this.membership = false;
 		this.Key = null;
 	}
-	public String getAccount(){
+	public String getUserName(){
 		return this.username;
 	}
 	public boolean isDisable(){
