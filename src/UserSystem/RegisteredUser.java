@@ -104,7 +104,7 @@ public class RegisteredUser {
 	}
 	public void addCredit(int credit){
 		if this.member == true{
-			println ("you are already a member");
+			System.out.println ("you are already a member");
 			return;
 		}
 		this.credit = this.credit + credit;
