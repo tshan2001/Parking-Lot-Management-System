@@ -4,22 +4,120 @@ import java.util.HashMap;
 import UserSystem.Admin;
 
 public class Database {
-	HashMap<String,Admin> AdminDatabase = new HashMap<String,Admin>();
-	HashMap<String,RegisteredUser> UserDatabase = new HashMap<String,RegisteredUser>();
-	
-	public Database(){
-		String sudo_id = "thelot";
-		String sudo_pwd = "12345";
-		Admin sudo = new Admin(sudo_id,sudo_pwd);
-		AdminDatabase.put((sudo_id+sudo_pwd),sudo);
+	HashMap<String,Admin> AdminDatabase;
+	HashMap<String,RegisteredUser> UserDatabase;
+
+	String sudo_acc;
+	String sudo_pwd;
+
+
+	/* Database constructor */
+	public Database(String sudo_acc){
+		this.sudo_acc = sudo_acc;
+		//set password of first Admin default to "12345"
+		this.sudo_pwd = "12345";
+
+		//Initialize two database
+		AdminDatabase = new HashMap<String,Admin>();
+		UserDatabase = new HashMap<String,RegisteredUser>();
+
+		//Add first admin to the AdminDataBase
+		Admin sudo = new Admin(sudo_acc,sudo_pwd);
+		AdminDatabase.put(sudo_acc,sudo);
 	}
-	
+
+
+	/* --- User Database Functions --- */
 	protected HashMap<String,RegisteredUser> getUsers(){
 		return UserDatabase;
 	}
-	
+
+	protected RegisteredUser getUser(String userName) {
+		return UserDatabase.get(userName);
+	}
+
+	/* Check if the user exists in the user database */
+	protected boolean userExists(String userToCheck) {
+		return UserDatabase.containsKey(userToCheck);
+	}
+
+	/* Add user to the UserDatabase
+	 * set the key of the hash map to be the username
+	 * if user already exists, return false
+	 */
+	protected boolean addUser(RegisteredUser userToAdd) {
+		if(this.userExists(userToAdd.getUserName)) {
+			return false;
+		}
+		this.UserDatabase.put(userToAdd.getUserName(), userToAdd);
+		return true;
+	}
+
+	protected boolean removeUser(RegisteredUser userToDelete) {
+		RegisteredUser removed = this.UserDatabase.remove(userToDelete.getUserName());
+		if (removed==null) {
+			return false;
+		}
+		return true;
+	}
+
+	protected boolean userUpdatePwd(String userToUpdate, String pwd) {
+		if(this.userExists(userToUpdate)) {
+			this.getUser(userToUpdate).updatePwd(pwd);
+			return true;
+		}
+		return false;
+	}
+
+	/* --- Admin Database Functions --- */
 	protected HashMap<String,Admin> getAdmins(){
 		return AdminDatabase;
 	}
-	
+
+	protected Admin getAdmin(String userName) {
+		return AdminDatabase.get(userName);
+	}
+
+	/* Check if the admin exists in the user database */
+	protected boolean adminExists(String userName) {
+		return AdminDatabase.containsKey(userName);
+	}
+
+	/* Add admin to the AdminDatabase
+	 * set the key of the hash map to be the username
+	 * if user already exists, return false
+	 */
+	protected boolean addAdmin(Admin adminToAdd) {
+		if(this.adminExists(adminToAdd.getUserName())) {
+			return false;
+		}
+		this.AdminDatabase.put(adminToAdd.getUserName(), adminToAdd);
+		return true;
+	}
+
+	protected boolean removeAdmin(Admin adminToDelete) {
+		Admin removed = this.AdminDatabase.remove(adminToDelete.getUserName());
+		if (removed==null) {
+			return false;
+		}
+		return true;
+	}
+
+	protected boolean adminUpdatePwd(String adminToUpdate, String pwd) {
+		if(this.adminExists(adminToUpdate)) {
+			this.getAdmin(adminToUpdate).updatePwd(pwd);
+			return true;
+		}
+		return false;
+	}
+
+
+	/* --- Database Class Functions --- */
+	protected boolean adminDatabaseIsEmpty() {
+		return this.AdminDatabase.isEmpty();
+	}
+
+	protected boolean userDatabaseIsEmpty() {
+		return this.UserDatabase.isEmpty();
+	}
 }
