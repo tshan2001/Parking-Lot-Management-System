@@ -6,10 +6,10 @@ public class Vehicle {
 	char type; // what type car it is
 
 	
-	public Vehicle(String plt, boolean comp, int time) {
+	public Vehicle(String plt, boolean comp, char type) {
 		this.plate = plt;
 		this.comp = comp;
-		this.type;
+		this.type = type;
 
 	}
 
