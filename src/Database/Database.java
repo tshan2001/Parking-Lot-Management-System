@@ -63,7 +63,7 @@ public class Database {
 
 	protected boolean userUpdatePwd(String userToUpdate, String pwd) {
 		if(this.userExists(userToUpdate)) {
-			this.getUser(userToUpdate).updatePwd(pwd);
+			this.getUser(userToUpdate).setNewPassword(pwd);
 			return true;
 		}
 		return false;
