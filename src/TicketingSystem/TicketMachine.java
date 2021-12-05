@@ -34,9 +34,9 @@ public class TicketMachine {
         this.avaliableDisa = lot.getDisa();
     }
 
-    public boolean registeredEntering(Key userKey, String type){
+    public boolean registeredEntering(Key userKey){
         if (this.database.userExists(userKey.getUserName())){
-            if (type.equals("Reg")){
+            if (userKey.type == 0){
                 if (this.avaliableReg > 0) {
                     this.avaliableReg--;
                 }
@@ -45,7 +45,7 @@ public class TicketMachine {
                     return false;
                 }
             }
-            else if (type.equals("Disa")){
+            else if (userKey.type == 1){
                 if (this.avaliableDisa > 0) {
                     this.avaliableDisa--;
                 }
@@ -54,7 +54,7 @@ public class TicketMachine {
                     return false;
                 }
             }
-            else if (type.equals("Comp")){
+            else if (userKey.type == 2){
                 if (this.avaliableComp > 0) {
                     this.avaliableComp--;
                 }
@@ -127,7 +127,7 @@ public class TicketMachine {
         Duration parkingTime = Duration.between(entranceTime, leaveTime);
         int timeIn15 = (int) parkingTime.toMinutes() / 15;
         int finalPrice = price * timeIn15;
-        
+        System.out.println("Your total amount due is: " + Integer.toString(finalPrice) + " \nPlease insert your credit card");
     }
     
 }
