@@ -4,6 +4,9 @@ import Database.Database;
 import ParkingLot.Lot;
 import UserSystem.RegisteredUser;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class TicketMachine {
     Database database;
     String machineID;
@@ -115,6 +118,16 @@ public class TicketMachine {
         else{
             System.out.println("User not recogonized, please re-enter username or exit the lot by paying your ticket");
         }
+    }
+
+    public void oneTimeLeave(Ticket ticket){
+        Instant leaveTime = Instant.now();
+        Instant entranceTime = ticket.start;
+        int price = ticket.pricePer15Min;
+        Duration parkingTime = Duration.between(entranceTime, leaveTime);
+        int timeIn15 = (int) parkingTime.toMinutes() / 15;
+        int finalPrice = price * timeIn15;
+        
     }
     
 }
