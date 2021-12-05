@@ -1,32 +1,39 @@
 package TicketingSystem;
 import ParkingLot.Lot;
 
+
+
+import java.time.Instant;
+import java.util.*;
+
 public class Ticket {
-	long start;
-	int price;
+	Instant start;
+	int ID;
+	int pricePer15Min;
 	
 	public Ticket() {
-		this.start = System.currentTimeMillis();
-		this.price = 0;
-		
+		this.start = Instant.now();
+		Random random = new Random();
+		this.ID = random.nextInt(999999);
+		this.pricePer15Min = 0;
 	}
 	
-	public Ticket(Lot thelot) {
-		this.start = System.currentTimeMillis();
-		this.price = thelot.getPrice();
-		
+	public Ticket(Lot lot) {
+		this.start = Instant.now();
+		Random random = new Random();
+		this.ID = random.nextInt(999999);
+		this.pricePer15Min = lot.getPrice();
 	}
-	
-	public int checkout(){
-		int total_time = (int)((System.currentTimeMillis() - this.start)/3600000);
-		int total = total_time*this.price;
-		return total;
-		
+
+	public int getPrice(){
+		return this.pricePer15Min;
 	}
-	
-	
-	
-	public static void main(String args[])  {
-		
+
+	public int getID(){
+		return this.ID;
+	}
+
+	public Instant getStartTime(){
+		return this.start;
 	}
 }
