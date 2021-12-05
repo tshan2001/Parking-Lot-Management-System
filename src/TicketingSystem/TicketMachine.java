@@ -21,9 +21,10 @@ public class TicketMachine {
         this.avaliableDisa = 0;
     }
 
-    public TicketMachine(String name, Lot lot){
+    public TicketMachine(String name, Lot lot, Database database){
         this.machineID = name;
         this.lot = lot;
+        this.database = database;
         this.currentRate = lot.getPrice();
         this.avaliableReg = lot.getReg();
         this.avaliableComp = lot.getComp();
@@ -31,7 +32,7 @@ public class TicketMachine {
     }
 
     public boolean registeredEntering(Key userKey, String type){
-        if (database.userExists(userKey.getUserName())){
+        if (this.database.userExists(userKey.getUserName())){
             if (type.equals("Reg")){
                 if (this.avaliableReg > 0) {
                     this.avaliableReg--;
@@ -97,6 +98,23 @@ public class TicketMachine {
             }
         }
         return null;
+    }
+    
+    public void registeredLeave(Key key, String type){
+        if (this.database.userExists(key.getUserName())){
+            if (type.equals("Reg")){
+                this.avaliableReg++;
+            }
+            else if (type.equals("Disa")){
+                this.avaliableDisa++;
+            }
+            else if (type.equals("Comp")) {
+                this.avaliableComp++;
+            }
+        }
+        else{
+            System.out.println("User not recogonized, please re-enter username or exit the lot by paying your ticket");
+        }
     }
     
 }
