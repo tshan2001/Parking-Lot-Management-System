@@ -214,6 +214,9 @@ public class Lot {
 					page = 0;
 				}
 				break;
+			case 3:
+				System.out.println("<Parking>: Please select parking options");
+				page = 3;
 
 			case 6:
 				System.out.println("<Display>: Current Parking Lot has: ");
@@ -242,9 +245,8 @@ public class Lot {
 	}
 
 	// "<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	5. Display current lot available \n 	6. Return to main page \n"
-	public void parking_cmds(Admin admin){
+	public void parking_cmds(int cmd, Admin admin){
 		Scanner scanner = new Scanner(System.in);
-		int cmd = scanner.nextInt();
 		switch (cmd) {
 			case 1:
 				System.out.println("To enter the lot, Please scan your Key fob or enter your fob ID");
@@ -275,7 +277,6 @@ public class Lot {
 				break;
 
 		}
-		page = 0;
 	}
 
 	public static void main(String args[]) {
@@ -294,7 +295,6 @@ public class Lot {
 		while (true) {
 			int cmd = scanner.nextInt();
 			System.out.println(" - - - - - - - - - - - - - - ");
-			if (cmd == 3) page = 3;
 			switch (page) {
 				case 0: /* At main page */
 					mylot.mainCmds(cmd);
@@ -303,9 +303,7 @@ public class Lot {
 					mylot.admin_cmd(cmd, temp_admin);
 					break;
 				case 3: /* The parking option page */
-					page = 3;
-					System.out.println(cmds[page]);
-					mylot.parking_cmds(temp_admin);
+					mylot.parking_cmds(cmd, temp_admin);
 					break;
 			}
 			System.out.println(" - - - - - - - - -  - - - - -");
