@@ -2,6 +2,8 @@ package ParkingLot;
 import java.util.Scanner;
 
 import Database.Database;
+import TicketingSystem.Key;
+import TicketingSystem.TicketMachine;
 import UserSystem.Admin;
 import UserSystem.RegisteredUser;;
 
@@ -39,11 +41,11 @@ public class Lot {
 	int num_disa;
 	int num_comp;
 	int MAXS = MAXSIZE_Disa + MAXSIZE_Comp + MAXSIZE_Reg; /* Total Spots  */
-	int numSpots;
 	int num_registered;
 	int rate; /* This parking lot uses flat rate, in dollars  */
 	Spot[] ParkingSpots; /* The array for each spot */
 	Database db;
+	TicketMachine machine;
 
 	public Lot() {
 	/* The default constructor for the parking lot*/
@@ -54,9 +56,11 @@ public class Lot {
 		this.num_reg = MAXSIZE_Reg;
 		this.num_disa = MAXSIZE_Disa;
 		this.num_comp = MAXSIZE_Comp;
+		this.num_registered = 0;
 		this.ParkingSpots = new Spot[MAXS]; /* Generate such number for spots class */
 		this.rate=10;
 		this.db = new Database();
+		this.machine = new TicketMachine(this,this.db);
 		
 		
 		/* Update each spot with its type */
@@ -124,7 +128,7 @@ public class Lot {
 	}
 	
 	public int numAvail() {
-		return this.numSpots;
+		return (this.num_reg + this.num_disa + this.num_comp);
 	}
 	
 
@@ -137,7 +141,6 @@ public class Lot {
 		}
 		
 		this.ParkingSpots[spot_id].availabilty = true;
-		this.numSpot +=1;
 		switch(this.ParkingSpots[spot_id].type){
 		case 0:
 			this.num_reg += 1;
@@ -161,7 +164,6 @@ public class Lot {
 		
 		this.ParkingSpots[spot_id].availabilty = true;
 		this.ParkingSpots[spot_id].register = true;
-		this.numSpot +=1;
 		this.num_registered -= 1;
 		switch(this.ParkingSpots[spot_id].type){
 		case 0:
@@ -182,13 +184,12 @@ public class Lot {
 		 * 0 represent regular
 		 * 1 represent compact
 		 * 2 represent disability*/
-		this.numSpots -= 1;
 		
 		switch(type) {
 		case 0:
 			for (int i=0; i<MAXSIZE_Reg;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.num_reg -= 1;
 					return this.ParkingSpots[i];
 				}
@@ -197,7 +198,7 @@ public class Lot {
 		case 1:
 			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.num_comp -= 1;
 					return this.ParkingSpots[i];
 				}
@@ -206,17 +207,17 @@ public class Lot {
 		case 2:
 			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.num_disa -= 1;
 					return this.ParkingSpots[i];
 				}
 			}
 			break;
 		default:
-			this.numSpots += 1;
 			return new Spot();
 			
 		}
+		return new Spot();
 		
 		
 	}
@@ -227,14 +228,13 @@ public class Lot {
 		 * 0 represent regular
 		 * 1 represent compact
 		 * 2 represent disability*/
-		this.numSpots -= 1;
 		this.num_registered += 1;
 		
 		switch(type) {
 		case 0:
 			for (int i=0; i<MAXSIZE_Reg;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.ParkingSpots[i].register = true;
 					this.num_reg -= 1;
 					return this.ParkingSpots[i];
@@ -244,7 +244,7 @@ public class Lot {
 		case 1:
 			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.ParkingSpots[i].register = true;
 					this.num_comp -= 1;
 					return this.ParkingSpots[i];
@@ -254,7 +254,7 @@ public class Lot {
 		case 2:
 			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
-					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].availabilty = false;
 					this.ParkingSpots[i].register = true;
 					this.num_disa -= 1;
 					return this.ParkingSpots[i];
@@ -262,11 +262,11 @@ public class Lot {
 			}
 			break;
 		default:
-			this.numSpots += 1;
 			this.num_registered -= 1;
 			return new Spot();
 			
 		}
+		return new Spot();
 	}
 	
 	
@@ -330,7 +330,7 @@ public class Lot {
 	
 		
 		}
-		
+		return;
 	}
 	
 	public void admin_cmd(int cmd, Admin admin) {
@@ -381,6 +381,32 @@ public class Lot {
 				page = 2;
 			}
 			break;
+		case 2:
+			System.out.println("Restart will not save everything you have right now...");
+			System.out.println("You sure you want to restart the entire system? ");
+			System.out.println("(yes / no) ");
+			setting_input = setting_scanner.nextLine();
+			if (setting_input.equals("yes")) {
+				System.out.println("The system is restarted. Welcome back");
+				this.db = new Database();
+				this.num_comp = this.MAXSIZE_Comp;
+				this.num_disa = this.MAXSIZE_Disa;
+				this.num_registered = 0;
+				this.ParkingSpots = new Spot[this.MAXS];
+				this.machine = new TicketMachine(this,this.db);
+				page = 0;
+				System.out.println(" ");
+				System.out.println("The default admin Username is " + this.db.getSudoID());
+				System.out.println("The default admin Password is " + this.db.getSudoPwd());
+				System.out.println("Please use the sudo admin to gain access");
+				System.out.println(" ");
+			}else if(setting_input.equals("no")) {
+				page = 2;
+			}else {
+				System.out.println("Invalid Input, Restart is cancelled");
+				page = 2;
+			}
+			break;	
 		case 4:
 			page = 1;
 			break;
