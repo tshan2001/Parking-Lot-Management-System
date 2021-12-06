@@ -2,10 +2,11 @@ package UserSystem;
 import ParkingLot.Lot;
 import Database.Database;
 
-import java.io.IOException;
-import java.util.HashMap;
 
-public class Admin {
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Admin { 
 	
 	HashMap<String, String> Admins;
 	/* a unique attribute of the admin class */
@@ -13,14 +14,14 @@ public class Admin {
 	/* used for logins */
 	String AdminPassword;
 	
-	
-	public Admin(String username, String password) throws IOException{
-		if(Database.adminExist(username) == false) {
-			this.AdminUsername = username;
-			this.AdminPassword = password;
-		}else {
-			throw new IOException ("Username Already Exist.");
-		}
+	public Admin() {
+		this.AdminUsername = "do not exist";
+		this.AdminPassword = "do not exist";
+	}
+	public Admin(String username, String password) {		
+		this.AdminUsername = username;
+		this.AdminPassword = password;
+
 	}
 	
 	/*returns the username of Admin*/
@@ -55,17 +56,17 @@ public class Admin {
 	}
 	
 	/* calling methods in Database class to add user, output lines correspondingly*/
-	public void addUser(RegisteredUser s) {
-		if(Database.addUser(s)) {
-			System.out.println("User successfully added!")
+	public void addUser(RegisteredUser s, Database db) {
+		if(db.addUser(s)) {
+			System.out.println("User successfully added!");
 		}else {
-			System.out.println("User already Exist.")
+			System.out.println("User already Exist.");
 		}
 	}
 	
 	/* calling methods in Database class to remove user, output lines correspondingly*/
-	public void removeUser(RegisteredUser s) {
-		if(Database.removeUser(s)) {
+	public void removeUser(RegisteredUser s, Database db) {
+		if(db.removeUser(s)) {
 			System.out.println("User successfully removed!");
 		}else {
 			System.out.println("User does not exist.");
@@ -73,8 +74,8 @@ public class Admin {
 	}
 	
 	/* calling methods in Database class to remove Admin, output lines correspondingly*/
-	public void removeAdmin(Admin a) {
-		if(Database.removeAdmin(a)) {
+	public void removeAdmin(Admin a, Database db) {
+		if(db.removeAdmin(a)) {
 			System.out.println("Admin successfully removed!");
 		}else {
 			System.out.println("Admin does not exist.");
@@ -82,12 +83,28 @@ public class Admin {
 	}
 	
 	/* calling methods in Database class to add Admin, output lines correspondingly*/
-	public void addAdmin(Admin a) {
-		if(Database.addAdmin(a)) {
+	public void addAdmin(Admin a, Database db) {
+		if(db.addAdmin(a)) {
 			System.out.println("Admin successfully added!");
 		}else {
 			System.out.println("Admin already exist.");
 		}
 	}
+	
+	public void admin_cmd(int cmd, Database db) {
+		Scanner admin_scanner = new Scanner(System.in);
+		switch (cmd) {
+		case 1:
+			System.out.print("<Admin>: Enter Username:	");
+			String username = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Password:	");
+			String pwd = admin_scanner.nextLine();
+			RegisteredUser user = new RegisteredUser(username, pwd);
+			this.addUser(user, db);
+		}
+		admin_scanner.close();
+	}
+	
+	
 }
 
