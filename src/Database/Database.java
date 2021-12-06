@@ -144,4 +144,12 @@ public class Database {
 	public boolean userDatabaseIsEmpty() {
 		return this.UserDatabase.isEmpty();
 	}
+	
+	public String getSudoID() {
+		return this.sudo_acc;
+	}
+	
+	public String getSudoPwd() {
+		return this.sudo_pwd;
+	}
 }
