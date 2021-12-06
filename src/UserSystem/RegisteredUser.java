@@ -43,7 +43,7 @@ public class RegisteredUser {
 		this.password = pwd;
 	}
 
-	public RegisteredUser(String usern, String pwd, String email, int unit, boolean disa, int leasePeriod, String creditCard, int credit) {
+	public RegisteredUser(String usern, String pwd, String email, int unit, boolean disa, int credit) {
 		this.disability = disa;
 		this.username = usern;
 		this.password = pwd;
@@ -53,11 +53,9 @@ public class RegisteredUser {
 		this.Key = null;
 		this.cars = new Vehicle[maxicars];
 		this.numCars = 0;
-		this.leasePeriod = leasePeriod;
 		for (int i=0; i<maxicars;i++) {
 			this.cars[i] = null;
 		}
-		this.creditCard = creditCard;
 		this.credit = 0;
 
 
@@ -95,6 +93,10 @@ public class RegisteredUser {
 	public String getEmail(){
 		return this.email;
 	}
+	public void changeEmail(String email) {
+		this.email = email;
+		return;
+	}
 	public int getUnit(){
 		return this.unitNum;
 	}
@@ -122,7 +124,7 @@ public class RegisteredUser {
 		return;
 	}
 
-	public void addVehicle(String plate, boolean comp, char type) {
+	public void addVehicle(String plate, boolean comp, String type) {
 		if (this.numCars == maxicars) {
 			System.out.println("You have reached maximum cars registered");
 			return;
