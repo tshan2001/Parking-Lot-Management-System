@@ -13,6 +13,7 @@ public class Lot {
 	public static int page = 0;
 	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot \n",
 			"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Back to main\n",
+			"CASE2: NYI",
 			"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	5. Display current lot availability \n 	6. Return to main page \n"};
 	public static Admin temp_admin = new Admin();
 	int MAXSIZE_Disa; /* Spots for Disability  */
@@ -302,7 +303,7 @@ public class Lot {
 					mylot.admin_cmd(cmd, temp_admin);
 					break;
 				case 3: /* The parking option page */
-					page = 2;
+					page = 3;
 					System.out.println(cmds[page]);
 					mylot.parking_cmds(temp_admin);
 					break;
