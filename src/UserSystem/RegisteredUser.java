@@ -14,7 +14,7 @@ public class RegisteredUser {
 	int numCars;
 	Key Key;
 	int credit;
-	String credCard;
+	String creditCard;
 	int leasePeriod;
 
 
