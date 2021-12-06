@@ -1,12 +1,15 @@
 package ParkingLot;
 import java.util.Scanner;
 
-import Database.Database;;
+import Database.Database;
+import UserSystem.Admin;;
 
 
 public class Lot {
 	public static int page = 0;
 	public static String main_cmds = "<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot\n";
+	public static String admin_cmds = "<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n";
+	public Admin temp_admin;
 	int MAXSIZE_Disa; /* Spots for Disability  */
 	int MAXSIZE_Comp; /* Spots for compact  */
 	int MAXSIZE_Reg;  /* Spots for regular  */
@@ -192,19 +195,23 @@ public class Lot {
 			System.out.print("<Admin>: Enter Admin Username:	");
 			String username = main_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password:	");
-			String password = main_scanner.nextLine();
-			if (this.db.verifyAdmin(username, password) != null) {
-				Admin current_admin = this.db.verifyAdmin(username, password);
-				page = 1;
-			}else {
+			String pwd = main_scanner.nextLine();
+			temp_admin = this.db.verifyAdmin(username, pwd);
+			page = 1;
+			
+			if (temp_admin.getUsername() == "do not exist") {
 				System.out.println("<Admin>: Invalid Username or Passward.");
 			}
+			
+			break;
 			
 		case 6:
 			System.out.println("<Display>: Current Parking Lot has: ");
 			System.out.println("	Regular Spots: " + this.getReg());
 			System.out.println("	Compact Spots: " + this.getComp());
 			System.out.println("	Disability Spots: " + this.getDisa());
+			break;
+	
 		
 		}
 		main_scanner.close();
@@ -215,8 +222,8 @@ public class Lot {
 		
 		System.out.println("Default parking lot and database has generated");
 		System.out.println(" ");
-		System.out.println("The default admin Username is " + this.db.getSudoId());
-		System.out.println("The default admin Password is " + this.db.getSudoPwd());
+		System.out.println("The default admin Username is " + mylot.db.getSudoID());
+		System.out.println("The default admin Password is " + mylot.db.getSudoPwd());
 		System.out.println("Please use the sudo admin to gain access");
 		System.out.println(" ");
 		System.out.println(main_cmds);
@@ -236,14 +243,18 @@ public class Lot {
 				case 1: /* At administration page */
 					int admin_cmd = scanner.nextInt();
 					System.out.println(" - - - - - - - - - - - - - - ");
-					mylot.mainCmds(main_cmd);
+					mylot.temp_admin.admin_cmd(admin_cmd,mylot.db);
 					System.out.println(" - - - - - - - - -  - - - - -");
 					System.out.println("");
 					System.out.println(main_cmds);
 				
 				}
 			}
+			scanner.close();
 		}
+		
+		
+		
 
 	}
 
