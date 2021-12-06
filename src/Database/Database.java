@@ -51,7 +51,7 @@ public class Database {
 	 * if user already exists, return false
 	 */
 	public boolean addUser(RegisteredUser userToAdd) {
-		if(this.userExists(userToAdd.getUserName)) {
+		if(this.userExists(userToAdd.getUserName())) {
 			return false;
 		}
 		this.UserDatabase.put(userToAdd.getUserName(), userToAdd);
@@ -103,15 +103,15 @@ public class Database {
 	 * if user already exists, return false
 	 */
 	public boolean addAdmin(Admin adminToAdd) {
-		if(this.adminExists(adminToAdd.getUserName())) {
+		if(this.adminExists(adminToAdd.getUsername())) {
 			return false;
 		}
-		this.AdminDatabase.put(adminToAdd.getUserName(), adminToAdd);
+		this.AdminDatabase.put(adminToAdd.getUsername(), adminToAdd);
 		return true;
 	}
 
 	public boolean removeAdmin(Admin adminToDelete) {
-		Admin removed = this.AdminDatabase.remove(adminToDelete.getUserName());
+		Admin removed = this.AdminDatabase.remove(adminToDelete.getUsername());
 		if (removed==null) {
 			return false;
 		}
@@ -120,19 +120,20 @@ public class Database {
 
 	public boolean adminUpdatePwd(String adminToUpdate, String pwd) {
 		if(this.adminExists(adminToUpdate)) {
-			this.getAdmin(adminToUpdate).updatePwd(pwd);
+			this.getAdmin(adminToUpdate).changePassword(pwd);
 			return true;
 		}
 		return false;
 	}
 	
 	public Admin verifyAdmin(String userName, String pwd) {
+		
 		if(this.adminExists(userName)) {
-			if(this.getAdmin(userName).getPassword()==pwd) {
+			if(this.getAdmin(userName).getPassword().equals(pwd)) {
 				return this.getAdmin(userName);
 			}
 		}
-		return null;
+		return new Admin();
 	}
 
 
@@ -152,4 +153,4 @@ public class Database {
 	public String getSudoPwd() {
 		return this.sudo_pwd;
 	}
-}
+
