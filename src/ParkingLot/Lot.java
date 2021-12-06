@@ -60,14 +60,17 @@ public class Lot {
 		
 		/* Update each spot with its type */
 		for (int i=0; i<MAXSIZE_Reg;i++) {
+			/* For regular */
 			this.ParkingSpots[i] = new Spot(i,0);
 		}
 		
-		for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
+		for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Comp);i++) {
+			/* For compact */
 			this.ParkingSpots[i] = new Spot(i,1);
 		}
 		
-		for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
+		for (int i=(MAXSIZE_Reg+MAXSIZE_Comp); i<MAXS;i++) {
+			/* For disabiltiy */
 			this.ParkingSpots[i] = new Spot(i,2);
 		}
 		
