@@ -193,7 +193,12 @@ public class Lot {
 			String username = main_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password:	");
 			String password = main_scanner.nextLine();
-			if (this.db.)
+			if (this.db.verifyAdmin(username, password) != null) {
+				Admin current_admin = this.db.verifyAdmin(username, password);
+				page = 1;
+			}else {
+				System.out.println("<Admin>: Invalid Username or Passward.");
+			}
 			
 		case 6:
 			System.out.println("<Display>: Current Parking Lot has: ");
@@ -210,8 +215,8 @@ public class Lot {
 		
 		System.out.println("Default parking lot and database has generated");
 		System.out.println(" ");
-		System.out.println("The default admin Username is " + mydatabase.getSudoId());
-		System.out.println("The default admin Password is " + mydatabase.getSudoPwd());
+		System.out.println("The default admin Username is " + this.db.getSudoId());
+		System.out.println("The default admin Password is " + this.db.getSudoPwd());
 		System.out.println("Please use the sudo admin to gain access");
 		System.out.println(" ");
 		System.out.println(main_cmds);
@@ -221,13 +226,21 @@ public class Lot {
 		while (true) {
 			if (scanner.hasNext()) {
 				switch (page) {
-				case 0:
+				case 0: /* At main page */
 					int main_cmd = scanner.nextInt();
 					System.out.println(" - - - - - - - - - - - - - - ");
 					mylot.mainCmds(main_cmd);
 					System.out.println(" - - - - - - - - -  - - - - -");
 					System.out.println("");
 					System.out.println(main_cmds);
+				case 1: /* At administration page */
+					int admin_cmd = scanner.nextInt();
+					System.out.println(" - - - - - - - - - - - - - - ");
+					mylot.mainCmds(main_cmd);
+					System.out.println(" - - - - - - - - -  - - - - -");
+					System.out.println("");
+					System.out.println(main_cmds);
+				
 				}
 			}
 		}
