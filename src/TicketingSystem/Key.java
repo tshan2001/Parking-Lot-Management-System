@@ -8,6 +8,7 @@ public class Key {
     String userName;
     boolean active;
     Spot spot;
+    int type;
 
     public Key(){
         this.userName = "UNKNOWN";
@@ -20,6 +21,7 @@ public class Key {
         Random random = new Random();
         this.active = false;
         this.spot = lot.assignSpotReg(type, true);
+        this.type = type;
     }
 
     public void activateAccount(){
