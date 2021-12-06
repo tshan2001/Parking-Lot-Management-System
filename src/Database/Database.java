@@ -76,7 +76,7 @@ public class Database {
 	
 	public RegisteredUser verifyUser(String userName, String pwd) {
 		if(this.userExists(userName)) {
-			if(this.getUser(userName).getPassword()==pwd) {
+			if(this.getUser(userName).getPassword().equals(pwd)) {
 				return this.getUser(userName);
 			}
 		}
@@ -154,3 +154,4 @@ public class Database {
 		return this.sudo_pwd;
 	}
 
+}
