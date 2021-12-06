@@ -22,9 +22,9 @@ public class RegisteredUser {
 
 	public RegisteredUser() {
 		this.disability = false;
-		this.username = "None";
-		this.password = "None";
-		this.email = "None";
+		this.username = "do not exist";
+		this.password = "do not exist";
+		this.email = "do not exist";
 		this.unitNum = -1;
 		this.membership = false;
 		this.Key = null;
