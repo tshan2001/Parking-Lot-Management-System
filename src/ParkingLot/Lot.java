@@ -12,7 +12,7 @@ import TicketingSystem.Ticket;
 public class Lot {
 	public static int page = 0;
 	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot \n",
-			"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Back to main\n",
+			"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Update Admin Password\n	8.Back to main\n",
 			"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  8. Back to main \n",
 			"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	5. Display current lot availability \n 	6. Return to main page \n"};
 	public static Admin temp_admin = new Admin();
