@@ -16,6 +16,11 @@ public class Lot {
 			"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  8. Back to main \n",
 			"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	5. Display current lot availability \n 	6. Return to main page \n"};
 	public static Admin temp_admin = new Admin();
+	
+	public static RegisteredUser temp_user = new RegisteredUser("ydai23","dai123","ydai@bu.edu", 455, false, 0);
+	String result = temp_user.getUserName();
+	String UserPwd = temp_user.getPassword();
+	
 	int MAXSIZE_Disa; /* Spots for Disability  */
 	int MAXSIZE_Comp; /* Spots for compact  */
 	int MAXSIZE_Reg;  /* Spots for regular  */
