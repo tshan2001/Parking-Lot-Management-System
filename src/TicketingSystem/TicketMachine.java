@@ -128,6 +128,8 @@ public class TicketMachine {
         int timeIn15 = (int) parkingTime.toMinutes() / 15;
         int finalPrice = price * timeIn15;
         System.out.println("Your total amount due is: " + Integer.toString(finalPrice) + " \nPlease insert your credit card");
+        this.gate.open();
+        this.gate.close();
     }
     
 }
