@@ -38,7 +38,11 @@ public class Database {
 	}
 
 	public RegisteredUser getUser(String userName) {
-		return UserDatabase.get(userName);
+		if(UserDatabase.containsKey(userName)) {
+			return UserDatabase.get(userName);
+		}else {
+			return null;
+		}
 	}
 
 	/* Check if the user exists in the user database */
@@ -59,11 +63,15 @@ public class Database {
 	}
 
 	public boolean removeUser(RegisteredUser userToDelete) {
-		RegisteredUser removed = this.UserDatabase.remove(userToDelete.getUserName());
-		if (removed==null) {
+		if(userToDelete == null) {
 			return false;
 		}
-		return true;
+		if(this.UserDatabase.containsKey(userToDelete.getUserName())) {
+			this.UserDatabase.remove(userToDelete.getUserName());
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	public boolean userUpdatePwd(String userToUpdate, String pwd) {
@@ -90,7 +98,11 @@ public class Database {
 	}
 
 	public Admin getAdmin(String userName) {
-		return AdminDatabase.get(userName);
+		if(AdminDatabase.containsKey(userName)) {
+			return AdminDatabase.get(userName);
+		}else {
+			return null;
+		}
 	}
 
 	/* Check if the admin exists in the user database */
@@ -111,11 +123,15 @@ public class Database {
 	}
 
 	public boolean removeAdmin(Admin adminToDelete) {
-		Admin removed = this.AdminDatabase.remove(adminToDelete.getUsername());
-		if (removed==null) {
+		if(adminToDelete == null) {
 			return false;
 		}
-		return true;
+		if(this.AdminDatabase.containsKey(adminToDelete.getUsername())) {
+			this.AdminDatabase.remove(adminToDelete.getUsername());
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	public boolean adminUpdatePwd(String adminToUpdate, String pwd) {
