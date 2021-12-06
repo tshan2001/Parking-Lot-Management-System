@@ -127,51 +127,15 @@ public class Lot {
 		return this.numSpots;
 	}
 	
-	
-	public Spot assignSpotReg(int type, boolean in) {
-		/* Assign Spot to a Registered User
-		 * 0 represent regular
-		 * 1 represent compact
-		 * 2 represent disability*/
-	
-		
-		switch(type) {
-		case 0:
-			for (int i=0; i<MAXSIZE_Reg;i++) {
-				if (this.ParkingSpots[i].register == false) {
-					this.ParkingSpots[i].changeReg(in);
-					this.ParkingSpots[i].availabilty = (! in);
-					this.num_reg -= 1;
-					return this.ParkingSpots[i];
-				}
-			}
-		case 1:
-			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Comp);i++) {
-				if (this.ParkingSpots[i].register == false) {
-					this.ParkingSpots[i].changeReg(in);
-					this.ParkingSpots[i].availabilty = (! in);
-					this.num_disa -= 1;
-					return this.ParkingSpots[i];
-				}
-			}
-			
-		case 2:
-			for (int i=(MAXSIZE_Reg+MAXSIZE_Comp); i<MAXS;i++) {
-				if (this.ParkingSpots[i].register == false) {
-					this.ParkingSpots[i].changeReg(in);
-					this.ParkingSpots[i].availabilty = (! in);
-					this.num_comp -= 1;
-					return this.ParkingSpots[i];
-				}
-			}
-		default:
-			return new Spot();
-			
-		}
 
-	}
-	
 	public void freeSpotOneTime(int spot_id) {
+		if (this.ParkingSpots[spot_id].availabilty == true){
+			System.out.println(" ");
+			System.out.println(" <ERROR> : The spot is availability right now");
+			System.out.println(" ");
+			return;
+		}
+		
 		this.ParkingSpots[spot_id].availabilty = true;
 		this.numSpot +=1;
 		switch(this.ParkingSpots[spot_id].type){
@@ -188,49 +152,123 @@ public class Lot {
 	}
 	
 	public void freeSpotReg(int spot_id) {
+		if (this.ParkingSpots[spot_id].availabilty == true){
+			System.out.println(" ");
+			System.out.println(" <ERROR> : The spot has not been registered yet");
+			System.out.println(" ");
+			return;
+		}
+		
 		this.ParkingSpots[spot_id].availabilty = true;
 		this.ParkingSpots[spot_id].register = true;
-		this.num_reg += 1;
+		this.numSpot +=1;
+		this.num_registered -= 1;
+		switch(this.ParkingSpots[spot_id].type){
+		case 0:
+			this.num_reg += 1;
+			break;
+		case 1:
+			this.num_comp += 1;
+			break;
+		case 2:
+			this.num_disa += 1;
+			break;
+		}
 	}
 
 
 	public Spot assignSpotOneTime(int type) {
 		/* Assign Spot to a one time parking
 		 * 0 represent regular
-		 * 1 represent disability
-		 * 2 represent compact*/
+		 * 1 represent compact
+		 * 2 represent disability*/
 		this.numSpots -= 1;
 		
 		switch(type) {
 		case 0:
 			for (int i=0; i<MAXSIZE_Reg;i++) {
-				if (this.ParkingSpots[i].availabilty == false) {
-					this.ParkingSpots[i].changeReg(true);
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.num_reg -= 1;
 					return this.ParkingSpots[i];
 				}
 			}
+			break;
 		case 1:
 			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
-				if (this.ParkingSpots[i].availabilty == false) {
-					this.ParkingSpots[i].changeReg(true);
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.num_comp -= 1;
 					return this.ParkingSpots[i];
 				}
 			}
-			
+			break;
 		case 2:
 			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
-				if (this.ParkingSpots[i].availabilty == false) {
-					this.ParkingSpots[i].changeReg(true);
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.num_disa -= 1;
 					return this.ParkingSpots[i];
 				}
 			}
+			break;
 		default:
+			this.numSpots += 1;
 			return new Spot();
 			
 		}
 		
 		
 	}
+	
+		
+	public Spot assignSpotReg(int type) {
+		/* Assign Spot to a Registered User
+		 * 0 represent regular
+		 * 1 represent compact
+		 * 2 represent disability*/
+		this.numSpots -= 1;
+		this.num_registered += 1;
+		
+		switch(type) {
+		case 0:
+			for (int i=0; i<MAXSIZE_Reg;i++) {
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].register = true;
+					this.num_reg -= 1;
+					return this.ParkingSpots[i];
+				}
+			}
+			break;
+		case 1:
+			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].register = true;
+					this.num_comp -= 1;
+					return this.ParkingSpots[i];
+				}
+			}
+			break;
+		case 2:
+			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
+				if (this.ParkingSpots[i].availabilty == true) {
+					this.ParkingSpots[i].availability == false;
+					this.ParkingSpots[i].register = true;
+					this.num_disa -= 1;
+					return this.ParkingSpots[i];
+				}
+			}
+			break;
+		default:
+			this.numSpots += 1;
+			this.num_registered -= 1;
+			return new Spot();
+			
+		}
+	}
+	
 	
 	public void mainCmds(int main_cmd) {
 		/* commands for page 0 main page */
