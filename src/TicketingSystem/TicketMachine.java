@@ -6,6 +6,7 @@ import UserSystem.RegisteredUser;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Spliterator;
 
 public class TicketMachine {
     Database database;
@@ -38,6 +39,7 @@ public class TicketMachine {
         if (this.database.userExists(userKey.getUserName())){
             if (userKey.spotType == 0){
                 if (this.avaliableReg > 0) {
+                    System.out.println("Welcome Back!");
                     this.avaliableReg--;
                 }
                 else{
@@ -103,15 +105,15 @@ public class TicketMachine {
         return null;
     }
 
-    public void registeredLeave(Key key, String type){
+    public void registeredLeave(Key key){
         if (this.database.userExists(key.getUserName())){
-            if (type.equals("Reg")){
+            if (key.spotType == 0){
                 this.avaliableReg++;
             }
-            else if (type.equals("Disa")){
+            else if (key.spotType == 1){
                 this.avaliableDisa++;
             }
-            else if (type.equals("Comp")) {
+            else if (key.spotType == 2) {
                 this.avaliableComp++;
             }
         }
