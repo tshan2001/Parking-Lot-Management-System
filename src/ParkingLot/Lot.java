@@ -272,10 +272,10 @@ public class Lot {
 				System.out.println("Available Compact Spots: " + this.num_comp + "\n");
 				break;
 			case 6:
-				page = 0;
 				break;
 
 		}
+		page = 0;
 	}
 
 	public static void main(String args[]) {
