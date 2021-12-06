@@ -96,7 +96,7 @@ public class TicketMachine {
                 System.out.println("There's no compact parking spot available, please try other types");
             }
         }
-        return null;
+        return new Ticket();
     }
 
     public void registeredLeave(Key key){
