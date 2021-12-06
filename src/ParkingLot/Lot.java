@@ -40,6 +40,7 @@ public class Lot {
 	int num_comp;
 	int MAXS = MAXSIZE_Disa + MAXSIZE_Comp + MAXSIZE_Reg; /* Total Spots  */
 	int numSpots;
+	int num_registered;
 	int rate; /* This parking lot uses flat rate, in dollars  */
 	Spot[] ParkingSpots; /* The array for each spot */
 	Database db;
@@ -86,15 +87,15 @@ public class Lot {
 		this.rate = price;
 		
 		for (int i=0; i<MAXSIZE_Reg;i++) {
-			this.ParkingSpots[i] = new Spot(i,false,false);
+			this.ParkingSpots[i] = new Spot(i,0);
 		}
 		
-		for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
-			this.ParkingSpots[i] = new Spot(i,true,false);
+		for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Comp);i++) {
+			this.ParkingSpots[i] = new Spot(i,1);
 		}
 		
-		for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
-			this.ParkingSpots[i] = new Spot(i,false,true);
+		for (int i=(MAXSIZE_Reg+MAXSIZE_Comp); i<MAXS;i++) {
+			this.ParkingSpots[i] = new Spot(i,2);
 		}
 		
 		
@@ -126,17 +127,12 @@ public class Lot {
 		return this.numSpots;
 	}
 	
-	public void removeSpotReg(int SpotId) {
-	/* Given the spot, remove this Spot as a registered Spot */
-		this.ParkingSpots[SpotId].register = false;
-		this.ParkingSpots[SpotId].availabilty = true;
-	}
 	
 	public Spot assignSpotReg(int type, boolean in) {
 		/* Assign Spot to a Registered User
 		 * 0 represent regular
-		 * 1 represent disability
-		 * 2 represent compact*/
+		 * 1 represent compact
+		 * 2 represent disability*/
 	
 		
 		switch(type) {
@@ -150,7 +146,7 @@ public class Lot {
 				}
 			}
 		case 1:
-			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
+			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Comp);i++) {
 				if (this.ParkingSpots[i].register == false) {
 					this.ParkingSpots[i].changeReg(in);
 					this.ParkingSpots[i].availabilty = (! in);
@@ -160,7 +156,7 @@ public class Lot {
 			}
 			
 		case 2:
-			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
+			for (int i=(MAXSIZE_Reg+MAXSIZE_Comp); i<MAXS;i++) {
 				if (this.ParkingSpots[i].register == false) {
 					this.ParkingSpots[i].changeReg(in);
 					this.ParkingSpots[i].availabilty = (! in);
@@ -177,6 +173,18 @@ public class Lot {
 	
 	public void freeSpotOneTime(int spot_id) {
 		this.ParkingSpots[spot_id].availabilty = true;
+		this.numSpot +=1;
+		switch(this.ParkingSpots[spot_id].type){
+		case 0:
+			this.num_reg += 1;
+			break;
+		case 1:
+			this.num_comp += 1;
+			break;
+		case 2:
+			this.num_disa += 1;
+			break;
+		}
 	}
 	
 	public void freeSpotReg(int spot_id) {
