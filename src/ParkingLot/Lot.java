@@ -2,13 +2,14 @@ package ParkingLot;
 import java.util.Scanner;
 
 import Database.Database;
-import UserSystem.Admin;;
+import UserSystem.Admin;
+import UserSystem.RegisteredUser;;
 
 
 public class Lot {
 	public static int page = 0;
 	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot\n", "<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Back to main\n"};
-	public Admin temp_admin;
+	public static Admin temp_admin = new Admin();
 	int MAXSIZE_Disa; /* Spots for Disability  */
 	int MAXSIZE_Comp; /* Spots for compact  */
 	int MAXSIZE_Reg;  /* Spots for regular  */
@@ -191,17 +192,18 @@ public class Lot {
 		Scanner main_scanner = new Scanner(System.in);
 		switch (main_cmd) {
 		case 1:
+
 			System.out.print("<Admin>: Enter Admin Username:	");
 			String username = main_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password:	");
 			String pwd = main_scanner.nextLine();
 			temp_admin = this.db.verifyAdmin(username, pwd);
 			page = 1;
-			
+				
 			if (temp_admin.getUsername() == "do not exist") {
 				System.out.println("<Admin>: Invalid Username or Passward.");
+				page = 0;
 			}
-			
 			break;
 			
 		case 6:
@@ -214,6 +216,25 @@ public class Lot {
 		
 		}
 		
+	}
+	
+	public void admin_cmd(int cmd, Admin admin) {
+		Scanner admin_scanner = new Scanner(System.in);
+		switch (cmd) {
+		case 1:
+			System.out.print("<Admin>: Enter Username:	");
+			String username = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Password:	");
+			String pwd = admin_scanner.nextLine();
+			RegisteredUser user = new RegisteredUser(username, pwd);
+			admin.addUser(user, db);
+			break;
+		case 7:
+			page = 0;
+
+		}
+		
+
 	}
 	
 	public static void main(String args[]) {
@@ -231,23 +252,19 @@ public class Lot {
 
 		while (true) {
 			int cmd = scanner.nextInt();
+			System.out.println(" - - - - - - - - - - - - - - ");
 			switch (page) {
 			case 0: /* At main page */
-				System.out.println(" - - - - - - - - - - - - - - ");
 				mylot.mainCmds(cmd);
-				System.out.println(" - - - - - - - - -  - - - - -");
-				System.out.println("");
-				System.out.println(cmds[page]);
 				break;
 			case 1: /* At administration page */
-				System.out.println(" - - - - - - - - - - - - - - ");
-				mylot.temp_admin.admin_cmd(cmd,mylot.db);
-				System.out.println(" - - - - - - - - -  - - - - -");
-				System.out.println("");
-				System.out.println(cmds[page]);
+				mylot.admin_cmd(cmd, temp_admin);
 				break;
 				
 			}
+			System.out.println(" - - - - - - - - -  - - - - -");
+			System.out.println("");
+			System.out.println(cmds[page]);
 			
 
 		}
