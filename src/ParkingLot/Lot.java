@@ -238,14 +238,14 @@ public class Lot {
 			temp_admin = this.db.verifyAdmin(username, pwd);
 			page = 1;
 				
-			if (temp_admin.getUsername() == "do not exist") {
+			if (temp_admin.getUsername().equals( "do not exist")) {
 				System.out.println("<Admin>: Invalid Username or Passward.");
 				page = 0;
 			}
 			break;
 			
 		case 2: /* sign in as user */
-			if (! temp_user.getUserName().equals("None")) {
+			if (! temp_user.getUserName().equals("do not exist")) {
 				System.out.println("Signed in as " + temp_user.getUserName());
 				page = 3;
 				break;
@@ -258,7 +258,7 @@ public class Lot {
 			temp_user = this.db.verifyUser(username, pwd);
 			page = 3;
 				
-			if (temp_user.getUserName().equals("None")) {
+			if (temp_user.getUserName().equals("do not exist")) {
 				System.out.println("<User>: Invalid Username or Passward.");
 				page = 0;
 			}
