@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 import Database.Database;
 import UserSystem.Admin;
-import UserSystem.RegisteredUser;;
+import UserSystem.RegisteredUser;
 import TicketingSystem.Key;
 import TicketingSystem.TicketMachine;
 import TicketingSystem.Ticket;
@@ -245,19 +245,74 @@ public class Lot {
 		}
 	}
 
-	public void admin_cmd(int cmd, Admin admin) {
+	public void admin_cmd(int cmd, Admin admin, Lot lot) {
 		Scanner admin_scanner = new Scanner(System.in);
 		switch (cmd) {
-			case 1:
-				System.out.print("<Admin>: Enter Username:	");
-				String username = admin_scanner.nextLine();
-				System.out.print("<Admin>: Enter Password:	");
-				String pwd = admin_scanner.nextLine();
-				RegisteredUser user = new RegisteredUser(username, pwd);
-				admin.addUser(user, db);
+		case 1:
+			System.out.print("<Admin>: Enter Username: ");
+			String username = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Password: ");
+			String pwd = admin_scanner.nextLine();
+			RegisteredUser user = new RegisteredUser(username, pwd);
+			admin.addUser(user, db);
+			break;
+		case 2:
+			System.out.print("<Admin>: Enter Username: ");
+			String username1 = admin_scanner.nextLine();
+			admin.removeUser(db.getUser(username1), db);
+			break;
+		case 3:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username2 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Admin Password: ");
+			String pwd2 = admin_scanner.nextLine();
+			Admin ad = new Admin(username2, pwd2);
+			admin.addAdmin(ad, db);
+			break;
+		case 4:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username3 = admin_scanner.nextLine();
+			admin.removeAdmin(db.getAdmin(username3), db);
+			break;
+		case 5:
+			System.out.println("<Admin>: Current rate is " + rate);
+			System.out.print("<Admin>: Enter new rate: ");
+			String new_rate = admin_scanner.nextLine();
+			admin.changePriceAdmin(Integer.parseInt(new_rate), lot);
+			System.out.println("Successfully changed rate, the new rate is: " + lot.getPrice());
+			break;
+		case 6:
+			System.out.print("<Admin>: Enter Username: ");
+			String username4 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Password: ");
+			String pwd4 = admin_scanner.nextLine();
+			if(db.verifyUser(username4, pwd4) == null) {
+				System.out.println("User does not exist or password does not match.");
 				break;
-			case 7:
-				page = 0;
+			}else {
+				System.out.print("<Admin>: Enter New Password: ");
+				String new_pwd = admin_scanner.nextLine();
+				db.getUser(username4).setNewPassword(new_pwd);
+				System.out.println("<Admin>: The new password for the user is: " + db.getUser(username4).getPassword());
+				break;
+			}
+		case 7:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username5 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Admin Password: ");
+			String pwd5 = admin_scanner.nextLine();
+			if(db.verifyAdmin(username5, pwd5) == null) {
+				System.out.println("Admin does not exist or password does not match.");
+				break;
+			}else {
+				System.out.print("<Admin>: Enter New Password: ");
+				String new_pwd1 = admin_scanner.nextLine();
+				db.getAdmin(username5).changePassword(new_pwd1);
+				System.out.println("<Admin>: The new password for the admin is: " + db.getAdmin(username5).getPassword());
+				break;
+			}
+		case 8:
+			page = 0;
 
 		}
 	}
@@ -375,7 +430,7 @@ public class Lot {
 					mylot.mainCmds(cmd);
 					break;
 				case 1: /* At administration page */
-					mylot.admin_cmd(cmd, temp_admin);
+					mylot.admin_cmd(cmd, temp_admin, mylot);
 					break;
 				case 2: /* At user page */
 					mylot.user_cmd(cmd, temp_user, mylot);
