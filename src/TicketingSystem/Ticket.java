@@ -25,6 +25,7 @@ public class Ticket {
         this.start = Instant.now();
         Random random = new Random();
         this.ID = random.nextInt(999999);
+        System.out.println(this.ID);
         this.pricePer15Min = lot.getPrice();
         this.spot = lot.assignSpotOneTime(type);
     }
