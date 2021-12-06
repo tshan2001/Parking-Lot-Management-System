@@ -41,7 +41,7 @@ public class Database {
 		if(UserDatabase.containsKey(userName)) {
 			return UserDatabase.get(userName);
 		}else {
-			return null;
+			return new RegisteredUser();
 		}
 	}
 
@@ -88,7 +88,7 @@ public class Database {
 				return this.getUser(userName);
 			}
 		}
-		return null;
+		return new RegisteredUser();
 	}
 	
 
@@ -101,7 +101,7 @@ public class Database {
 		if(AdminDatabase.containsKey(userName)) {
 			return AdminDatabase.get(userName);
 		}else {
-			return null;
+			return new Admin();
 		}
 	}
 
