@@ -60,15 +60,15 @@ public class Lot {
 		
 		/* Update each spot with its type */
 		for (int i=0; i<MAXSIZE_Reg;i++) {
-			this.ParkingSpots[i] = new Spot(i,false,false);
+			this.ParkingSpots[i] = new Spot(i,0);
 		}
 		
 		for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
-			this.ParkingSpots[i] = new Spot(i,true,false);
+			this.ParkingSpots[i] = new Spot(i,1);
 		}
 		
 		for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
-			this.ParkingSpots[i] = new Spot(i,false,true);
+			this.ParkingSpots[i] = new Spot(i,2);
 		}
 		
 	}
