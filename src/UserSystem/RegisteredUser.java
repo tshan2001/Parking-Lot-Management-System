@@ -75,6 +75,9 @@ public class RegisteredUser {
 	public boolean isDisable(){
 		return this.disability;
 	}
+	public String getPassword (){
+		return this.password();
+	}
 	public void setNewPassword(String pwd){
 		this.password = pwd;
 	}
