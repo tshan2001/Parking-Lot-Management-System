@@ -3,24 +3,21 @@ package ParkingLot;
 public class Spot {
 	int SpotId;
 	boolean availabilty;
-	boolean disability;
-	boolean compact;
+	int type;
 	boolean register;
 	
 	public Spot() {
 		this.SpotId = -1;
 		this.availabilty = false;
-		this.disability = false;
-		this.compact = false;
+		this.type = -1;
 		this.register = false;
 	}
 
 
-	public Spot(int i, boolean disa, boolean comp) {
+	public Spot(int i, int type) {
 		this.SpotId = i;
 		this.availabilty = true;
-		this.disability = disa;
-		this.compact = comp;
+		this.type = ty[e;
 		this.register = false;
 	}
 	
