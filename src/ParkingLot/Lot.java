@@ -13,7 +13,7 @@ public class Lot {
 	public static int page = 0;
 	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot \n",
 			"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Back to main\n",
-			"CASE2: NYI",
+			"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  8. Back to main \n",
 			"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	5. Display current lot availability \n 	6. Return to main page \n"};
 	public static Admin temp_admin = new Admin();
 	int MAXSIZE_Disa; /* Spots for Disability  */
@@ -214,6 +214,24 @@ public class Lot {
 					page = 0;
 				}
 				break;
+			case 2:
+				this.db.addUser(temp_user);
+				System.out.println(result);
+				System.out.println(UserPwd);
+				System.out.print("<User>: Enter Username:     ");
+				String user = main_scanner.nextLine();
+			
+				System.out.print("<User>: Enter Password:      ");
+				String password = main_scanner.nextLine();
+				temp_user = this.db.verifyUser(user,password);
+			
+				page = 2;
+				if(temp_user == null) {
+					System.out.println("<User>: Invalid Username or Password.");
+					System.out.println("<User>: Are you a User yet? If not please register!");
+					page = 0;
+				}
+				break;
 			case 3:
 				System.out.println("<Parking>: Please select parking options");
 				page = 3;
@@ -241,6 +259,63 @@ public class Lot {
 			case 7:
 				page = 0;
 
+		}
+	}
+	
+	//"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  8. Back to main \n"
+	public void user_cmd(int cmd, RegisteredUser user, Lot mylot) {
+		Scanner user_scanner = new Scanner(System.in);
+		
+		switch(cmd) {
+		case 1: 
+			System.out.print("<User>: Enter your new password: ");
+			String password = user_scanner.nextLine();
+			user.setNewPassword(password);
+			break;
+		case 2: 
+			System.out.print("<User>: Enter the amount of credit you want to add:  ");
+			String credit = user_scanner.nextLine();
+			user.addCredit(Integer.parseInt(credit));
+			break;
+		case 3:
+			System.out.print("<User>: Enter your car plate: ");
+			String plate = user_scanner.nextLine();
+			System.out.print("<User>: Enter your spot type(yes for comp type, no for non com type: ");
+			String spotType = user_scanner.nextLine();
+			System.out.print("<User>: Enter you car type: ");
+			String cartype = user_scanner.nextLine();
+			if(spotType == "yes") {
+				user.addVehicle(plate, true, cartype);
+			}
+			else {
+				user.addVehicle(plate, false, cartype);
+			}
+			break;
+		case 4:
+			System.out.print("<User>: Enter your new email: ");
+			String email = user_scanner.nextLine();
+			user.setNewEmail(email);
+			break;
+		case 5:
+			user.cancel();
+			System.out.print("You have successfully canceled your membership");
+			break;
+		case 6:
+			
+			Key key = new Key(user.getUserName(), 0, mylot);
+			user.memberRegister(key);
+			System.out.print("You are a member now");
+			break;
+			
+		case 7:
+			System.out.print("Enter the car plate to begin the processing of removing specific Vechile");
+			String plateNum = user_scanner.nextLine();
+			user.removeVehicle(plateNum);
+			System.out.print("Car removed");
+			break;
+		case 8: 
+			page = 0;
+		
 		}
 	}
 
@@ -301,6 +376,9 @@ public class Lot {
 					break;
 				case 1: /* At administration page */
 					mylot.admin_cmd(cmd, temp_admin);
+					break;
+				case 2: /* At user page */
+					mylot.user_cmd(cmd, temp_user, mylot);
 					break;
 				case 3: /* The parking option page */
 					mylot.parking_cmds(cmd, temp_admin);
