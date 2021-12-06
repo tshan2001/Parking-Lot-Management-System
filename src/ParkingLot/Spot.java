@@ -17,7 +17,7 @@ public class Spot {
 	public Spot(int i, int type) {
 		this.SpotId = i;
 		this.availabilty = true;
-		this.type = ty[e;
+		this.type = type;
 		this.register = false;
 	}
 	
