@@ -7,8 +7,7 @@ import UserSystem.Admin;;
 
 public class Lot {
 	public static int page = 0;
-	public static String main_cmds = "<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot\n";
-	public static String admin_cmds = "<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n";
+	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. Register for User \n 	5. Advance Setting \n 	6. Display Parking Lot\n", "<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	2. Remove User \n 	3. Add Admin\n 	4. remove Admin\n 	5. change rate\n 	6. Update Password\n 	7. Back to main\n"};
 	public Admin temp_admin;
 	int MAXSIZE_Disa; /* Spots for Disability  */
 	int MAXSIZE_Comp; /* Spots for compact  */
@@ -214,7 +213,7 @@ public class Lot {
 	
 		
 		}
-		main_scanner.close();
+		
 	}
 	
 	public static void main(String args[]) {
@@ -226,31 +225,31 @@ public class Lot {
 		System.out.println("The default admin Password is " + mylot.db.getSudoPwd());
 		System.out.println("Please use the sudo admin to gain access");
 		System.out.println(" ");
-		System.out.println(main_cmds);
+		System.out.println(cmds[page]);
 		
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
-			if (scanner.hasNext()) {
-				switch (page) {
-				case 0: /* At main page */
-					int main_cmd = scanner.nextInt();
-					System.out.println(" - - - - - - - - - - - - - - ");
-					mylot.mainCmds(main_cmd);
-					System.out.println(" - - - - - - - - -  - - - - -");
-					System.out.println("");
-					System.out.println(main_cmds);
-				case 1: /* At administration page */
-					int admin_cmd = scanner.nextInt();
-					System.out.println(" - - - - - - - - - - - - - - ");
-					mylot.temp_admin.admin_cmd(admin_cmd,mylot.db);
-					System.out.println(" - - - - - - - - -  - - - - -");
-					System.out.println("");
-					System.out.println(main_cmds);
+			int cmd = scanner.nextInt();
+			switch (page) {
+			case 0: /* At main page */
+				System.out.println(" - - - - - - - - - - - - - - ");
+				mylot.mainCmds(cmd);
+				System.out.println(" - - - - - - - - -  - - - - -");
+				System.out.println("");
+				System.out.println(cmds[page]);
+				break;
+			case 1: /* At administration page */
+				System.out.println(" - - - - - - - - - - - - - - ");
+				mylot.temp_admin.admin_cmd(cmd,mylot.db);
+				System.out.println(" - - - - - - - - -  - - - - -");
+				System.out.println("");
+				System.out.println(cmds[page]);
+				break;
 				
-				}
 			}
-			scanner.close();
+			
+
 		}
 		
 		
