@@ -68,6 +68,16 @@ public class Database {
 		}
 		return false;
 	}
+	
+	public RegisteredUser verifyUser(String userName, String pwd) {
+		if(this.userExists(userName)) {
+			if(this.getUser(userName).getPassword()==pwd) {
+				return this.getUser(userName);
+			}
+		}
+		return null;
+	}
+	
 
 	/* --- Admin Database Functions --- */
 	public HashMap<String,Admin> getAdmins(){
@@ -109,6 +119,15 @@ public class Database {
 			return true;
 		}
 		return false;
+	}
+	
+	public Admin verifyAdmin(String userName, String pwd) {
+		if(this.adminExists(userName)) {
+			if(this.getAdmin(userName).getPassword()==pwd) {
+				return this.getAdmin(userName);
+			}
+		}
+		return null;
 	}
 
 
