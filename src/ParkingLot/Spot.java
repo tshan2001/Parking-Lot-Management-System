@@ -3,7 +3,7 @@ package ParkingLot;
 public class Spot {
 	int SpotId;
 	boolean availabilty;
-	int type;
+	int type; /* 0 represent regular, 1 represent compact, 2 represent disability */
 	boolean register;
 	
 	public Spot() {
