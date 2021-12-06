@@ -179,6 +179,7 @@ public class Lot {
 	public void freeSpotReg(int spot_id) {
 		this.ParkingSpots[spot_id].availabilty = true;
 		this.ParkingSpots[spot_id].register = true;
+		this.num_reg += 1;
 	}
 
 
