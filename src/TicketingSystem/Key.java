@@ -7,21 +7,21 @@ import ParkingLot.Spot;
 public class Key {
     String userName;
     boolean active;
-    Spot spot;
-    int type;
+    Spot spotAssigned;
+    int spotType;
 
     public Key(){
         this.userName = "UNKNOWN";
         this.active = false;
-        this.spot = null;
+        this.spotAssigned = null;
+        this.spotType = -1;
     }
 
     public Key(String name, int type, Lot lot){
         this.userName = name;
-        Random random = new Random();
         this.active = false;
-        this.spot = lot.assignSpotReg(type, true);
-        this.type = type;
+        this.spotAssigned = lot.assignSpotReg(type, true);
+        this.spotType = type;
     }
 
     public void activateAccount(){
