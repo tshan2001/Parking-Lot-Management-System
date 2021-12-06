@@ -2,15 +2,11 @@ package TicketingSystem;
 
 import Database.Database;
 import ParkingLot.Lot;
-import UserSystem.RegisteredUser;
-
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Spliterator;
 
 public class TicketMachine {
     Database database;
-    String machineID;
     Lot lot;
     int currentRate;
     int avaliableReg;
@@ -18,15 +14,13 @@ public class TicketMachine {
     int avaliableDisa;
 
     public TicketMachine(){
-        this.machineID = "UNKNOWN";
         this.currentRate = 0;
         this.avaliableReg = 0;
         this.avaliableComp = 0;
         this.avaliableDisa = 0;
     }
 
-    public TicketMachine(String name, Lot lot, Database database){
-        this.machineID = name;
+    public TicketMachine(Lot lot, Database database){
         this.lot = lot;
         this.database = database;
         this.currentRate = lot.getPrice();
