@@ -34,7 +34,11 @@ public class RegisteredUser {
 		}
 		this.creditCard = null;
 		this.credit = 0;
-
+	
+	public RegisteredUser(String usern, String pwd) {
+		this.username = usern;
+		this.password = pwd;
+	}
 	
 	public RegisteredUser(String usern, String pwd, String email, int unit, boolean disa, int leasePeriod p, String creditCard, int credit) {
 		this.disability = disa;
