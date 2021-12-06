@@ -317,7 +317,21 @@ public class Lot {
 			page = 4;
 			break;
 		case 4: /* Register for user */
-			break;
+			Scanner scanner = new Scanner(System.in);
+				System.out.print("<Register>: Choose a username: ");
+				String usn = scanner.nextLine();
+				System.out.print("<Register>: Choose a password: ");
+				String p = scanner.nextLine();
+				RegisteredUser toAdd = new RegisteredUser(usn, p);
+				boolean notExists = this.db.addUser(toAdd);
+				if(notExists == false) {
+					System.out.println("User already exists, please sign in instead.");
+				} else {
+					System.out.println("Registration succeeded.");
+				}
+//				System.out.println("To create an account:");
+				page = 0;
+				break;
 		case 5: /* Display availability */
 			System.out.println(" ");
 			System.out.println("<Display>: Current Parking Lot has: ");
