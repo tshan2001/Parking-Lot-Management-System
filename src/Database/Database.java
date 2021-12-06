@@ -6,21 +6,26 @@ import UserSystem.Admin;
 public class Database {
 	HashMap<String,Admin> AdminDatabase;
 	HashMap<String,RegisteredUser> UserDatabase;
-
+	
+	String name;
+	
 	String sudo_acc;
 	String sudo_pwd;
-
-
+	
+	
+	
 	/* Database constructor */
-	public Database(String sudo_acc){
-		this.sudo_acc = sudo_acc;
+	public Database(){
+		this.name = "lot";
+		//set userName of first Admin default to "admin1"
+		this.sudo_acc = "admin1";
 		//set password of first Admin default to "12345"
 		this.sudo_pwd = "12345";
-
+		
 		//Initialize two database
 		AdminDatabase = new HashMap<String,Admin>();
 		UserDatabase = new HashMap<String,RegisteredUser>();
-
+		
 		//Add first admin to the AdminDataBase
 		Admin sudo = new Admin(sudo_acc,sudo_pwd);
 		AdminDatabase.put(sudo_acc,sudo);
