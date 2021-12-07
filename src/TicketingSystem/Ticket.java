@@ -45,4 +45,6 @@ public class Ticket {
     }
 
     public String getID(){ return this.ID; }
+
+    public Spot getSpot(){ return this.spot; }
 }
