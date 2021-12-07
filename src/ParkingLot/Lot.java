@@ -557,6 +557,11 @@ public class Lot {
 				System.out.println("<Parking>: To leave the lot");
 				System.out.print("           please enter your username: ");
 				String userLeaving = parking_scanner.nextLine();
+				if (!this.db.userExists(userLeaving)){
+					System.out.println(" ");
+					System.out.println("<Parking>:  User not recogonized, please try again");
+					break;
+				}
 				Key key = this.db.getUser(userLeaving).getMemberKey();
 				this.machine.registeredLeave(key);
 				break;
