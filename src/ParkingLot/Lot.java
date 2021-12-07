@@ -518,7 +518,7 @@ public class Lot {
 		case 4:
 			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
-			System.out.print("You are a member now");
+			System.out.println("You are a member now");
 			break;
 		case 5:
 			page = 0;
