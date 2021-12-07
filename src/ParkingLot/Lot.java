@@ -516,10 +516,10 @@ public class Lot {
 			System.out.print("<User>: Enter you car type: ");
 			char cartype = user_scanner.nextLine().charAt(0);
 			if(spotType == "yes") {
-				user.addVehicle(plate, true, cartype);
+				user.addVehicle(plate, true, "Reg");
 			}
 			else {
-				user.addVehicle(plate, false, cartype);
+				user.addVehicle(plate, false, "Reg");
 			}
 			break;
 		case 4:
@@ -571,7 +571,9 @@ public class Lot {
 				this.machine.registeredLeave(key);
 				break;
 			case 4:
-				System.out.println("NYI");
+				System.out.println("To leave the lot, please scan your ticket or enter your ticket's ID");
+				String ticketID = parking_scanner.nextLine();
+				this.machine.oneTimeLeave(ticketID);
 				break;
 			case 5:
 				System.out.println("Available Regular Spots: " + this.num_reg + "\n");
@@ -579,6 +581,7 @@ public class Lot {
 				System.out.println("Available Compact Spots: " + this.num_comp + "\n");
 				break;
 			case 6:
+				page = 0;
 				break;
 
 		}

@@ -72,7 +72,7 @@ public class TicketMachine {
         if (type == 0){
             if (this.avaliableReg > 0) {
                 this.avaliableReg--;
-                System.out.println(ticket.getID());
+                System.out.println("Your ticket ID is: " + ticket.getID() + "\n You will need this ticket or it's ID when you leave");
                 this.database.addTicket(ticket);
                 return ticket;
             }

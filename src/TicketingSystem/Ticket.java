@@ -2,7 +2,6 @@ package TicketingSystem;
 import Database.Database;
 import ParkingLot.Lot;
 import ParkingLot.Spot;
-import UserSystem.tempUser;
 
 
 
@@ -30,7 +29,6 @@ public class Ticket {
             temp = random.nextInt(99999999);
         }
         this.ID = Integer.toString(temp);
-        System.out.println(this.ID);
         this.start = Instant.now();
         this.pricePer15Min = lot.getPrice();
         this.spot = lot.assignSpotOneTime(type);

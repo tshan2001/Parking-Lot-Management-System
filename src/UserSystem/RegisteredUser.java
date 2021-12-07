@@ -132,7 +132,7 @@ public class RegisteredUser {
 
 		for (int j=0; j<maxicars; j++) {
 			if (this.cars[j] == null) {
-				this.cars[j] = new Vehicle(plate,comp, type);
+				this.cars[j] = new Vehicle(plate,comp, '0');
 				this.numCars ++;
 				break;
 			}
