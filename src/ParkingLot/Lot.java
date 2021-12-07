@@ -10,17 +10,17 @@ import UserSystem.RegisteredUser;;
 
 public class Lot {
 	public static int page = 0;
+	//option display pages
 	public static String[] cmds = {
 		"<Main Page>: Please enter the option number: \n	"
 			+ "1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. "
 			+ "Register for User \n 	5. Display Parking Lot\n",
 		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
-			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n"
-			+ " 	9. Log out\n",
-		"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  
-			3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  
-			8. Back to main \n","<User>: 1. \n 	2. \n" , 
+			+ "5. Change rate\n 	6. Update User Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n",
+		"<User>: Entering Comands for next operation:\n 	1. Change password\n 	2. Add Credit\n" + 
+			" 	3. Add Vechicle\n 	4. Change email\n 	5. Cancel MemberShip\n 	6. Membership register\n 	7. Remove Vehicle \n " 
+			+ " 	8. Back to main \n 	9. Log Out", 
 		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
 			+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
 			+ "5. Display current lot availability \n 	6. Return to main page \n",
@@ -133,6 +133,7 @@ public class Lot {
 	}
 	
 	public int numAvail() {
+		/* Return total number of available spots */
 		return (this.num_reg + this.num_disa + this.num_comp);
 	}
 	
@@ -281,6 +282,7 @@ public class Lot {
 		switch (main_cmd) {
 		case 1:  /* sign in as admin */
 			if (! temp_admin.getUsername().equals("do not exist")) {
+				System.out.println(" ");
 				System.out.println("Signed in as " + temp_admin.getUsername());
 				page = 1;
 				break;
@@ -294,15 +296,23 @@ public class Lot {
 			page = 1;
 				
 			if (temp_admin.getUsername().equals( "do not exist")) {
+				System.out.println(" ");
+		
 				System.out.println("<Admin>: Invalid Username or Passward.");
 				page = 0;
+			}else {
+				System.out.println(" ");
+				
+				System.out.println("Welcome " + temp_admin.getUsername() + " !");
 			}
 			break;
 			
 		case 2: /* sign in as user */
 			if (! temp_user.getUserName().equals("do not exist")) {
+				System.out.println(" ");
+				
 				System.out.println("Signed in as " + temp_user.getUserName());
-				page = 3;
+				page = 2;
 				break;
 			}
 			
@@ -314,9 +324,16 @@ public class Lot {
 			page = 2;
 				
 			if (temp_user.getUserName().equals("do not exist")) {
+				System.out.println(" ");
+				
 				System.out.println("<User>: Invalid Username or Passward.");
 				page = 0;
+			} else {
+				System.out.println(" ");
+				
+				System.out.println("Welcome " + temp_user.getUserName() + " !");
 			}
+			
 			break;
 		case 3: /* Go to parking */
 			System.out.println("<Parking>: Please select parking options");
@@ -333,9 +350,11 @@ public class Lot {
 			toAdd.setNewEmail(email);
 			boolean notExists = this.db.addUser(toAdd);
 			if(notExists == false) {
+				System.out.println(" ");
 				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("User already exists, please sign in instead.");
 			} else {
+				System.out.println(" ");
 				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("Successfully registered.");
 			}
@@ -367,12 +386,14 @@ public class Lot {
 			System.out.print("<Admin>: Enter Password:	");
 			String pwd = admin_scanner.nextLine();
 			RegisteredUser user = new RegisteredUser(username, pwd);
+			System.out.println("	");
 			admin.addUser(user, db);
 			break;
 		case 2:
 			/* take input for user information to remove */
 			System.out.print("<Admin>: Enter Username: ");
 			String username1 = admin_scanner.nextLine();
+			System.out.println("	");
 			admin.removeUser(db.getUser(username1), db);
 			break;
 		case 3:
@@ -382,12 +403,14 @@ public class Lot {
 			System.out.print("<Admin>: Enter Admin Password: ");
 			String pwd2 = admin_scanner.nextLine();
 			Admin ad = new Admin(username2, pwd2);
+			System.out.println("	");
 			admin.addAdmin(ad, db);
 			break;
 		case 4:
 			/* take input for admin information to remove */
 			System.out.print("<Admin>: Enter Admin Username: ");
 			String username3 = admin_scanner.nextLine();
+			System.out.println("	");
 			admin.removeAdmin(db.getAdmin(username3), db);
 			break;
 		case 5:
@@ -396,6 +419,7 @@ public class Lot {
 			System.out.print("<Admin>: Enter new rate: ");
 			String new_rate = admin_scanner.nextLine();
 			admin.changePriceAdmin(Integer.parseInt(new_rate), this);
+			System.out.println("	");
 			System.out.println("Successfully changed rate, the new rate is: " + this.getPrice());
 			break;
 		case 6:
@@ -404,6 +428,7 @@ public class Lot {
 			String username4 = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Password: ");
 			String pwd4 = admin_scanner.nextLine();
+			System.out.println("	");
 			if(db.verifyUser(username4, pwd4) == null) {
 				System.out.println("User does not exist or password does not match.");
 				break;
@@ -420,6 +445,7 @@ public class Lot {
 			String username5 = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password: ");
 			String pwd5 = admin_scanner.nextLine();
+			System.out.println("	");
 			if(db.verifyAdmin(username5, pwd5) == null) {
 				System.out.println("Admin does not exist or password does not match.");
 				break;
@@ -439,7 +465,7 @@ public class Lot {
 		case 10:
 			page = 0;
 			temp_admin = new Admin();
-			System.out.println("You are logged out now");
+			System.out.println("<Admin>: You are logged out now");
 			break;
 
 		}
@@ -447,59 +473,6 @@ public class Lot {
 
 	}
 	
-	public void setting_cmd(int cmd) {
-		/* commands for page 2 setting */
-		Scanner setting_scanner = new Scanner(System.in);
-		switch(cmd) {
-		case 1:
-			System.out.println("Shutting down will not save everything you have right now...");
-			System.out.println("You sure you want to shut down the entire system? ");
-			System.out.println("(yes / no) ");
-			String setting_input = setting_scanner.nextLine();
-			if (setting_input.equals("yes")) {
-				System.out.println("The system is down. Thank you for supporting our software.");
-				System.exit(0);
-			}else if(setting_input.equals("no")) {
-				page = 5;
-			}else {
-				System.out.println("Invalid Input, Shutdown is cancelled");
-				page = 5;
-			}
-			break;
-
-		case 2:
-			System.out.println("Restart will not save everything you have right now...");
-			System.out.println("You sure you want to restart the entire system? ");
-			System.out.println("(yes / no) ");
-			setting_input = setting_scanner.nextLine();
-			if (setting_input.equals("yes")) {
-				System.out.println("The system is restarted. Welcome back");
-				this.db = new Database();
-				this.num_comp = this.MAXSIZE_Comp;
-				this.num_disa = this.MAXSIZE_Disa;
-				this.num_registered = 0;
-				this.ParkingSpots = new Spot[this.MAXS];
-				this.machine = new TicketMachine(this,this.db);
-				page = 0;
-				System.out.println(" ");
-				System.out.println("The default admin Username is " + this.db.getSudoID());
-				System.out.println("The default admin Password is " + this.db.getSudoPwd());
-				System.out.println("Please use the sudo admin to gain access");
-				System.out.println(" ");
-			}else if(setting_input.equals("no")) {
-				page = 5;
-			}else {
-				System.out.println("Invalid Input, Restart is cancelled");
-				page = 5;
-			}
-			break;	
-		case 4:
-			page = 1;
-			break;
-		
-		}
-		
-	}
 	
 	public void user_cmd(int cmd, RegisteredUser user) {
 		/* commands for page 3 sign in as user */
@@ -534,7 +507,14 @@ public class Lot {
 			temp_user = new RegisteredUser();
 			page = 0;
 			System.out.println("Returning to main page...");
-		
+		case 8:
+			page = 0;
+			break;
+		case 9:
+			temp_user = new RegisteredUser();
+			System.out.println("<User>: You are logged out now");
+			break;
+			
 		}
 	}
 	
@@ -587,7 +567,62 @@ public class Lot {
 	
 	
 	public void register_cmd(int cmd) {
-		/* commands for page 5 register page */
+		/* commands for page 4 register page */
+		
+	}
+	
+	public void setting_cmd(int cmd) {
+		/* commands for page 5 setting */
+		Scanner setting_scanner = new Scanner(System.in);
+		switch(cmd) {
+		case 1:
+			System.out.println("Shutting down will not save everything you have right now...");
+			System.out.println("You sure you want to shut down the entire system? ");
+			System.out.println("(yes / no) ");
+			String setting_input = setting_scanner.nextLine();
+			if (setting_input.equals("yes")) {
+				System.out.println("The system is down. Thank you for supporting our software.");
+				System.exit(0);
+			}else if(setting_input.equals("no")) {
+				page = 5;
+			}else {
+				System.out.println("Invalid Input, Shutdown is cancelled");
+				page = 5;
+			}
+			break;
+
+		case 2:
+			System.out.println("Restart will not save everything you have right now...");
+			System.out.println("You sure you want to restart the entire system? ");
+			System.out.println("(yes / no) ");
+			setting_input = setting_scanner.nextLine();
+			if (setting_input.equals("yes")) {
+				System.out.println("The system is restarted. Welcome back");
+				this.db = new Database();
+				this.num_comp = this.MAXSIZE_Comp;
+				this.num_disa = this.MAXSIZE_Disa;
+				this.num_registered = 0;
+				this.ParkingSpots = new Spot[this.MAXS];
+				this.machine = new TicketMachine(this,this.db);
+				page = 0;
+				System.out.println(" ");
+				System.out.println("The default admin Username is " + this.db.getSudoID());
+				System.out.println("The default admin Password is " + this.db.getSudoPwd());
+				System.out.println("Please use the sudo admin to gain access");
+				System.out.println(" ");
+			}else if(setting_input.equals("no")) {
+				page = 5;
+			}else {
+				System.out.println("Invalid Input, Restart is cancelled");
+				page = 5;
+			}
+			break;	
+		case 4:
+			page = 1;
+			break;
+			
+		
+		}
 		
 	}
 	
@@ -614,17 +649,14 @@ public class Lot {
 			case 1: /* At administration page */
 				mylot.admin_cmd(cmd, temp_admin);
 				break;
-			case 2: /* At Setting page */
-				mylot.setting_cmd(cmd);
-				break;
-			case 3: /* At User page; */
+			case 2: /* At User page; */
 				mylot.user_cmd(cmd, temp_user);
 				break;
-			case 4: /* At Parking page */
+			case 3: /* At Parking page */
 				mylot.parking_cmds(cmd, temp_admin);
 				break;
-			case 5: /* At Register page */
-				mylot.register_cmd(cmd);
+			case 5: /* At Setting page */
+				mylot.setting_cmd(cmd);
 				break;
 			}
 			System.out.println(" - - - - - - - - - - - - - - ");
