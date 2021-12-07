@@ -201,7 +201,7 @@ public class Lot {
 				}
 			}
 			break;
-		case 1:
+		case 2:
 			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
 					this.ParkingSpots[i].availabilty = false;
@@ -210,7 +210,7 @@ public class Lot {
 				}
 			}
 			break;
-		case 2:
+		case 1:
 			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
 					this.ParkingSpots[i].availabilty = false;
