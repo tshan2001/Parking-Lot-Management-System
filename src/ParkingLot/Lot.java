@@ -283,7 +283,8 @@ public class Lot {
 		case 1:  /* sign in as admin */
 			if (! temp_admin.getUsername().equals("do not exist")) {
 				System.out.println(" ");
-				System.out.println("Signed in as " + temp_admin.getUsername());
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println(" 	Signed in as " + temp_admin.getUsername());
 				page = 1;
 				break;
 			}
@@ -297,21 +298,22 @@ public class Lot {
 				
 			if (temp_admin.getUsername().equals( "do not exist")) {
 				System.out.println(" ");
-		
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Admin>: Invalid Username or Passward.");
 				page = 0;
 			}else {
 				System.out.println(" ");
-				
-				System.out.println("Welcome " + temp_admin.getUsername() + " !");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println(" 	Welcome " + temp_admin.getUsername() + " !");
 			}
 			break;
 			
 		case 2: /* sign in as user */
 			if (! temp_user.getUserName().equals("do not exist")) {
 				System.out.println(" ");
-				
-				System.out.println("Signed in as " + temp_user.getUserName());
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println(" 	Signed in as " + temp_user.getUserName());
 				page = 2;
 				break;
 			}
@@ -325,18 +327,17 @@ public class Lot {
 				
 			if (temp_user.getUserName().equals("do not exist")) {
 				System.out.println(" ");
-				
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<User>: Invalid Username or Passward.");
 				page = 0;
 			} else {
 				System.out.println(" ");
 				
-				System.out.println("Welcome " + temp_user.getUserName() + " !");
+				System.out.println(" 	Welcome " + temp_user.getUserName() + " !");
 			}
 			
 			break;
 		case 3: /* Go to parking */
-			System.out.println("<Parking>: Please select parking options");
 			page = 3;
 			break;
 		case 4: /* Register for user */
@@ -352,11 +353,11 @@ public class Lot {
 			if(notExists == false) {
 				System.out.println(" ");
 				System.out.println(" - - - - - - - - - - - - - - ");
-				System.out.println("User already exists, please sign in instead.");
+				System.out.println("<Register>: User already exists, please sign in instead.");
 			} else {
 				System.out.println(" ");
 				System.out.println(" - - - - - - - - - - - - - - ");
-				System.out.println("Successfully registered.");
+				System.out.println("<Register>: Successfully registered.");
 			}
 			page = 0;
 			break;
@@ -369,8 +370,10 @@ public class Lot {
 			System.out.println("	Disability Spots: " + this.getDisa());
 			System.out.println(" ");
 			break;
-	
-		
+		default:
+			page = 0;
+			System.out.println("<Error>: Invalid command, please try again. ");
+			break;
 		}
 		return;
 	}
@@ -416,11 +419,12 @@ public class Lot {
 		case 5:
 			/* change rate */
 			System.out.println("<Admin>: Current rate is " + rate);
+			System.out.println("	");
 			System.out.print("<Admin>: Enter new rate: ");
 			String new_rate = admin_scanner.nextLine();
 			admin.changePriceAdmin(Integer.parseInt(new_rate), this);
 			System.out.println("	");
-			System.out.println("Successfully changed rate, the new rate is: " + this.getPrice());
+			System.out.println("<Admin>: Successfully changed rate, the new rate is: " + this.getPrice());
 			break;
 		case 6:
 			/* update password for specified user */
@@ -430,7 +434,7 @@ public class Lot {
 			String pwd4 = admin_scanner.nextLine();
 			System.out.println("	");
 			if(db.verifyUser(username4, pwd4) == null) {
-				System.out.println("User does not exist or password does not match.");
+				System.out.println("<Admin>: User does not exist or password does not match.");
 				break;
 			}else {
 				System.out.print("<Admin>: Enter New Password: ");
@@ -447,7 +451,7 @@ public class Lot {
 			String pwd5 = admin_scanner.nextLine();
 			System.out.println("	");
 			if(db.verifyAdmin(username5, pwd5) == null) {
-				System.out.println("Admin does not exist or password does not match.");
+				System.out.println("<Admin>: Admin does not exist or password does not match.");
 				break;
 			}else {
 				System.out.print("<Admin>: Enter New Password: ");
@@ -461,13 +465,17 @@ public class Lot {
 			break;
 		case 9:
 			page = 0;
+			System.out.println("	Returning to main page...");
 			break;
 		case 10:
 			page = 0;
 			temp_admin = new Admin();
 			System.out.println("<Admin>: You are logged out now");
 			break;
-
+		default:
+			page = 1;
+			System.out.println("<Error>: Invalid command, please try again. ");
+			break;
 		}
 		
 
@@ -483,36 +491,44 @@ public class Lot {
 			String password = user_scanner.nextLine();
 			user.setNewPassword(password);
 			System.out.println(" - - - - - - - - - - - - - - ");
-			System.out.println("Password changed succussfully.");
+			System.out.println("<User>: Password changed succussfully.");
 			break;
 		case 2: 
 			System.out.print("<User>: Enter your new email: ");
 			String email = user_scanner.nextLine();
 			user.setNewEmail(email);
 			System.out.println(" - - - - - - - - - - - - - - ");
-			System.out.println("Email changed succussfully.");
+			System.out.println("<User>: Email changed succussfully.");
 			break;
 		case 3:
 			user.cancel();
 			System.out.println(" - - - - - - - - - - - - - - ");
-			System.out.println("You have successfully canceled your membership.");
+			System.out.println("<User>: You have successfully canceled your membership.");
 			break;
 		case 4:
 			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
 			System.out.println(" - - - - - - - - - - - - - - ");
-			System.out.println("You are a member now.");
+			System.out.println("<User>: You are a member now.");
 			break;
 		case 5:
 			page = 0;
-			System.out.println("Returning to main page...");
-				
+			System.out.println(" ");
+			System.out.println("	Returning to main page...");
+			break;
 		case 6:
 			temp_user = new RegisteredUser();
+			System.out.println(" ");
+			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: You are logged out now");
 			page = 0;
 			break;
-			
+		default:
+			page = 2;
+			System.out.println(" ");
+			System.out.println(" - - - - - - - - - - - - - - ");
+			System.out.println("<Error>: Invalid command, please try again. ");
+			break;
 		}
 	}
 	
@@ -521,33 +537,43 @@ public class Lot {
 		Scanner parking_scanner = new Scanner(System.in);
 		switch (cmd) {
 			case 1:
-				System.out.println("<Parking>: To enter the lot, please enter your username:");
+				System.out.print("<Parking>: To enter the lot, please enter your username:");
 				String user = parking_scanner.nextLine();
 				Key userkey = this.db.getUser(user).getMemberKey();
 				if (userkey == null) {
-					System.out.println();
+					System.out.println(" ");
+					System.out.println(" - - - - - - - - - - - - - - ");
 					System.out.println("<Parking>:  User not recogonized, please try again");
 					break;
 				}
 				this.machine.registeredEntering(userkey);
 				break;
 			case 2:
-				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n    0 - Regular \n    1 - Disability \n    2 - Compact \n");
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n 	0. - Regular \n 	1. - Disability\n 	2. - Compact \n");
+				System.out.print(" Select your spot: ");
 				int type = parking_scanner.nextInt();
 				this.machine.oneTimeParking(type);
 				break;
 			case 3:
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: To leave the lot, , please enter your username:");
 				String userLeaving = parking_scanner.nextLine();
 				Key key = this.db.getUser(userLeaving).getMemberKey();
 				this.machine.registeredLeave(key);
 				break;
 			case 4:
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: To leave the lot, please scan your ticket or enter your ticket's ID");
 				String ticketID = parking_scanner.nextLine();
 				this.machine.oneTimeLeave(ticketID);
 				break;
 			case 5:
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: Spots Display");
 				System.out.println(" ");
 				System.out.println("       Available Regular Spots: " + this.num_reg + "\n");
@@ -556,11 +582,14 @@ public class Lot {
 				break;
 			case 6:
 				page = 0;
-				System.out.println("Returning to main page...");
+				System.out.println(" ");
+				System.out.println("	Returning to main page...");
 				break;
 			default:
-				page = 0;
-				System.out.println("Command not recogonized");
+				page = 3;
+				System.out.println(" ");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println("<Error>: Invalid command, please try again. ");
 				break;
 
 		}
@@ -680,7 +709,10 @@ public class Lot {
 		case 4:
 			page = 1;
 			break;
-			
+		default:
+			page = 5;
+			System.out.println("<Error>: Invalid command, please try again. ");
+			break;
 		
 		}
 		
