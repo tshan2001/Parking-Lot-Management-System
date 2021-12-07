@@ -381,9 +381,9 @@ public class Lot {
 		switch (cmd) {
 		case 1:
 			/* take input for user information to add */
-			System.out.print("<Admin>: Enter Username:	");
+			System.out.print("<Admin>: Enter Username: ");
 			String username = admin_scanner.nextLine();
-			System.out.print("<Admin>: Enter Password:	");
+			System.out.print("<Admin>: Enter Password: ");
 			String pwd = admin_scanner.nextLine();
 			RegisteredUser user = new RegisteredUser(username, pwd);
 			System.out.println("	");
@@ -513,6 +513,7 @@ public class Lot {
 		case 9:
 			temp_user = new RegisteredUser();
 			System.out.println("<User>: You are logged out now");
+			page = 0;
 			break;
 			
 		}
@@ -523,35 +524,38 @@ public class Lot {
 		Scanner parking_scanner = new Scanner(System.in);
 		switch (cmd) {
 			case 1:
-				System.out.println("To enter the lot, please enter your username:");
+				System.out.println("<Parking>: To enter the lot, please enter your username:");
 				String user = parking_scanner.nextLine();
 				Key userkey = this.db.getUser(user).getMemberKey();
 				if (userkey == null) {
-					System.out.println("User not recogonized, please try again");
+					System.out.println();
+					System.out.println("<Parking>:  User not recogonized, please try again");
 					break;
 				}
 				this.machine.registeredEntering(userkey);
 				break;
 			case 2:
-				System.out.println("To enter the lot, Please select a spot type that you need to retrieve a ticket \n    0 - Regular \n    1 - Disability \n    2 - Compact \n");
+				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n    0 - Regular \n    1 - Disability \n    2 - Compact \n");
 				int type = parking_scanner.nextInt();
 				this.machine.oneTimeParking(type);
 				break;
 			case 3:
-				System.out.println("To leave the lot, , please enter your username:");
+				System.out.println("<Parking>: To leave the lot, , please enter your username:");
 				String userLeaving = parking_scanner.nextLine();
 				Key key = this.db.getUser(userLeaving).getMemberKey();
 				this.machine.registeredLeave(key);
 				break;
 			case 4:
-				System.out.println("To leave the lot, please scan your ticket or enter your ticket's ID");
+				System.out.println("<Parking>: To leave the lot, please scan your ticket or enter your ticket's ID");
 				String ticketID = parking_scanner.nextLine();
 				this.machine.oneTimeLeave(ticketID);
 				break;
 			case 5:
-				System.out.println("Available Regular Spots: " + this.num_reg + "\n");
-				System.out.println("Available Disability Spots: " + this.num_disa + "\n");
-				System.out.println("Available Compact Spots: " + this.num_comp + "\n");
+				System.out.println("<Parking>: Spots Display");
+				System.out.println(" ");
+				System.out.println("       Available Regular Spots: " + this.num_reg + "\n");
+				System.out.println("       Available Disability Spots: " + this.num_disa + "\n");
+				System.out.println("       Available Compact Spots: " + this.num_comp + "\n");
 				break;
 			case 6:
 				page = 0;
@@ -576,34 +580,40 @@ public class Lot {
 		Scanner setting_scanner = new Scanner(System.in);
 		switch(cmd) {
 		case 1:
-			System.out.println("Shutting down will not save everything you have right now...");
-			System.out.println("You sure you want to shut down the entire system? ");
-			System.out.println("(yes / no) ");
+			System.out.println("<Caution>: Shutting down will not save everything you have right now...");
+			System.out.println("           You sure you want to shut down the entire system? ");
+			System.out.print("           *****(yes / no)***** ");
 			String setting_input = setting_scanner.nextLine();
 			if (setting_input.equals("yes")) {
-				System.out.println("The system is down. Thank you for supporting our software.");
+				System.out.println("<System>: The system is down. Thank you for supporting our software.");
 				System.exit(0);
 			}else if(setting_input.equals("no")) {
 				page = 5;
 			}else {
-				System.out.println("Invalid Input, Shutdown is cancelled");
+				System.out.println("<Error>: Invalid Input, Shutdown is cancelled");
 				page = 5;
 			}
 			break;
 
 		case 2:
-			System.out.println("Restart will not save everything you have right now...");
-			System.out.println("You sure you want to restart the entire system? ");
-			System.out.println("(yes / no) ");
+			System.out.println("<Caution>: Restart will not save everything you have right now...");
+			System.out.println("           You sure you want to restart the entire system? ");
+			System.out.print("           *****(yes / no)***** ");
 			setting_input = setting_scanner.nextLine();
 			if (setting_input.equals("yes")) {
-				System.out.println("The system is restarted. Welcome back");
+				System.out.println("");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println("");
+				System.out.println("<System>: The system is restarted. Welcome back");
 				this.db = new Database();
 				this.num_comp = this.MAXSIZE_Comp;
 				this.num_disa = this.MAXSIZE_Disa;
+				this.num_reg = this.MAXSIZE_Reg;
 				this.num_registered = 0;
 				this.ParkingSpots = new Spot[this.MAXS];
 				this.machine = new TicketMachine(this,this.db);
+				temp_user = new RegisteredUser();
+				temp_admin = new Admin();
 				page = 0;
 				System.out.println(" ");
 				System.out.println("The default admin Username is " + this.db.getSudoID());
@@ -613,10 +623,63 @@ public class Lot {
 			}else if(setting_input.equals("no")) {
 				page = 5;
 			}else {
-				System.out.println("Invalid Input, Restart is cancelled");
+				System.out.println("<Error>: Invalid Input, Restart is cancelled");
 				page = 5;
 			}
 			break;	
+		case 3:
+			System.out.println("<Caution>: Starting new lot will not save everything you have right now...");
+			System.out.println("           You sure you want to start a new lot ? ");
+			System.out.print("           *****(yes / no)***** ");
+			setting_input = setting_scanner.nextLine();
+			if (setting_input.equals("yes")) {
+				System.out.print("<Setting>: Enter number of regular spot: ");
+				this.MAXSIZE_Reg = setting_scanner.nextInt();
+				System.out.print("<Setting>: Enter number of compact spot: ");
+				this.MAXSIZE_Comp = setting_scanner.nextInt();
+				System.out.print("<Setting>: Enter number of disability spot: ");
+				this.MAXSIZE_Disa = setting_scanner.nextInt();
+				System.out.println("");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println("");
+				System.out.println("<System>: The lot is updated. Welcome back");
+				this.db = new Database();
+				this.MAXS = this.MAXSIZE_Comp + this.MAXSIZE_Disa + this.MAXSIZE_Reg;
+				this.num_comp = this.MAXSIZE_Comp;
+				this.num_disa = this.MAXSIZE_Disa;
+				this.num_reg = this.MAXSIZE_Reg;
+				this.num_registered = 0;
+				this.ParkingSpots = new Spot[this.MAXS];
+				this.machine = new TicketMachine(this,this.db);
+				temp_user = new RegisteredUser();
+				temp_admin = new Admin();
+				
+				for (int i=0; i<this.MAXSIZE_Reg;i++) {
+					this.ParkingSpots[i] = new Spot(i,0);
+				}
+				
+				for (int i=this.MAXSIZE_Reg; i<(this.MAXSIZE_Reg+this.MAXSIZE_Comp);i++) {
+					this.ParkingSpots[i] = new Spot(i,1);
+				}
+				
+				for (int i=(this.MAXSIZE_Reg+this.MAXSIZE_Comp); i<this.MAXS;i++) {
+					this.ParkingSpots[i] = new Spot(i,2);
+				}
+				
+				
+				page = 0;
+				System.out.println(" ");
+				System.out.println("The default admin Username is " + this.db.getSudoID());
+				System.out.println("The default admin Password is " + this.db.getSudoPwd());
+				System.out.println("Please use the sudo admin to gain access");
+				System.out.println(" ");
+			}else if(setting_input.equals("no")) {
+				page = 5;
+			}else {
+				System.out.println("<Error>: Invalid Input, Restart is cancelled");
+				page = 5;
+			}
+			break;
 		case 4:
 			page = 1;
 			break;
@@ -625,7 +688,6 @@ public class Lot {
 		}
 		
 	}
-	
 	public static void main(String args[]) {
 		Lot mylot = new Lot();
 		
