@@ -541,7 +541,7 @@ public class Lot {
 		Scanner parking_scanner = new Scanner(System.in);
 		switch (cmd) {
 			case 1:
-				System.out.println("To enter the lot, Please scan your Key fob or enter your fob ID");
+				System.out.println("To enter the lot, please enter your username:");
 				String user = parking_scanner.nextLine();
 				Key userkey = this.db.getUser(user).getMemberKey();
 				if (userkey == null) {
@@ -556,7 +556,7 @@ public class Lot {
 				this.machine.oneTimeParking(type);
 				break;
 			case 3:
-				System.out.println("To leave the lot, Please scan your Key fob or enter your fob ID");
+				System.out.println("To leave the lot, , please enter your username:");
 				String userLeaving = parking_scanner.nextLine();
 				Key key = this.db.getUser(userLeaving).getMemberKey();
 				this.machine.registeredLeave(key);
