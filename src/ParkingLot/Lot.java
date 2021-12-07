@@ -16,14 +16,15 @@ public class Lot {
 			+ "Register for User \n 	5. Display Parking Lot\n",
 		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
-			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n"
-			+ " 	9. Log out\n",
-		"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  
-			3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  
-			8. Back to main \n","<User>: 1. \n 	2. \n" , 
+			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n",
+			"",
+		"<User>: Entering Comands for next operation: \n	1. Change password \n 	2. Add Credit \n" +  
+			"	3. Add Vechicle \n	4. Change email \n	5. Cancel MemberShip \n	6. Membership register \n	7. Remove Vehicle \n  " +
+			"	8. Back to main \n", 
 		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
-			+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
-			+ "5. Display current lot availability \n 	6. Return to main page \n",
+					+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
+					+ "5. Display current lot availability \n 	6. Return to main page \n",
+		
 		"<Register>: ",
 		"<Advanced Setting>: Entering Commands for next operation:\n 	1. Sudo Shut-down\n 	"
 			+ "2. Sudo Restart\n 	3. Start New Lot\n 	4. Back to Admin page", 
@@ -311,16 +312,18 @@ public class Lot {
 			System.out.print("<User>: Enter Password:	");
 			pwd = main_scanner.nextLine();
 			temp_user = this.db.verifyUser(username, pwd);
-			page = 2;
-				
 			if (temp_user.getUserName().equals("do not exist")) {
 				System.out.println("<User>: Invalid Username or Passward.");
 				page = 0;
+			} else {
+				page = 3;
+//				System.out.println("Jumped to page 3");
 			}
+			
 			break;
 		case 3: /* Go to parking */
 			System.out.println("<Parking>: Please select parking options");
-			page = 3;
+			page = 4;
 			break;
 		case 4: /* Register for user */
 			System.out.print("<Register>: Choose a username: ");
@@ -330,11 +333,12 @@ public class Lot {
 			RegisteredUser toAdd = new RegisteredUser(usn, p);
 			boolean notExists = this.db.addUser(toAdd);
 			if(notExists == false) {
+				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("User already exists, please sign in instead.");
 			} else {
-				System.out.println("Registration succeeded.");
+				System.out.println(" - - - - - - - - - - - - - - ");
+				System.out.println("Successfully registered.");
 			}
-			//System.out.println("To create an account:");
 			page = 0;
 			break;
 		case 5: /* Display availability */
@@ -386,8 +390,8 @@ public class Lot {
 			System.out.println("<Admin>: Current rate is " + rate);
 			System.out.print("<Admin>: Enter new rate: ");
 			String new_rate = admin_scanner.nextLine();
-			admin.changePriceAdmin(Integer.parseInt(new_rate), lot);
-			System.out.println("Successfully changed rate, the new rate is: " + lot.getPrice());
+			admin.changePriceAdmin(Integer.parseInt(new_rate), this);
+			System.out.println("Successfully changed rate, the new rate is: " + this.getPrice());
 			break;
 		case 6:
 			System.out.print("<Admin>: Enter Username: ");
@@ -510,7 +514,7 @@ public class Lot {
 			System.out.print("<User>: Enter your spot type(yes for comp type, no for non com type: ");
 			String spotType = user_scanner.nextLine();
 			System.out.print("<User>: Enter you car type: ");
-			String cartype = user_scanner.nextLine();
+			char cartype = user_scanner.nextLine().charAt(0);
 			if(spotType == "yes") {
 				user.addVehicle(plate, true, cartype);
 			}
@@ -528,8 +532,7 @@ public class Lot {
 			System.out.print("You have successfully canceled your membership");
 			break;
 		case 6:
-			
-			Key key = new Key(user.getUserName(), 0, mylot);
+			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
 			System.out.print("You are a member now");
 			break;
@@ -582,10 +585,10 @@ public class Lot {
 	}
 	
 	
-	public void register_cmd(int cmd) {
-		/* commands for page 5 register page */
-		
-	}
+//	public void register_cmd(int cmd) {
+//		/* commands for page 5 register page */
+//		
+//	}
 	
 	public static void main(String args[]) {
 		Lot mylot = new Lot();
@@ -620,7 +623,7 @@ public class Lot {
 				mylot.parking_cmds(cmd, temp_admin);
 				break;
 			case 5: /* At Register page */
-				mylot.register_cmd(cmd);
+//				mylot.register_cmd(cmd);
 				break;
 			}
 			System.out.println(" - - - - - - - - - - - - - - ");
