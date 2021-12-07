@@ -16,7 +16,7 @@ public class Database {
 	
 	
 	
-	/* Database constructor */
+	/* Database default constructor */
 	public Database(){
 		this.name = "lot";
 		//set userName of first Admin default to "admin1"
