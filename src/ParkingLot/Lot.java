@@ -10,25 +10,30 @@ import UserSystem.RegisteredUser;;
 
 public class Lot {
 	public static int page = 0;
-	public static String[] cmds = {"<Main Page>: Please enter the option number: \n	"
+	public static String[] cmds = {
+		"<Main Page>: Please enter the option number: \n	"
 			+ "1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. "
 			+ "Register for User \n 	5. Display Parking Lot\n",
-			"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
+		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
-			+ "5. Change rate\n 	6. Update Password\n 	7. Advanced Setting\n 	8. Back to main\n"
+			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n"
 			+ " 	9. Log out\n",
-			"<Advanced Setting>: Entering Commands for next operation:\n 	1. Sudo Shut-down\n 	"
+		"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  
+			3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  
+			8. Back to main \n","<User>: 1. \n 	2. \n" , 
+		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
+			+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
+			+ "5. Display current lot availability \n 	6. Return to main page \n",
+		"<Register>: ",
+		"<Advanced Setting>: Entering Commands for next operation:\n 	1. Sudo Shut-down\n 	"
 			+ "2. Sudo Restart\n 	3. Start New Lot\n 	4. Back to Admin page", 
-			"<User>: 1. \n 	2. \n" , "<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
-					+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
-					+ "5. Display current lot availability \n 	6. Return to main page \n"};
+			};
 	/* page 0 = main page
 	 * page 1 = Admin page
-	 * page 2 = Setting page
-	 * page 3 = User Page
-	 * page 4 = Parking Page
-	 * page 5 = Register Page
-	 * page 6 = NYI
+	 * page 2 = User Page
+	 * page 3 = Parking Page
+	 * page 4 = Register Page
+	 * page 5 = Advance Setting under Admin page
 	 * page 7 = NYI
 	 * page 8 = NYI
 	 * */
@@ -306,7 +311,7 @@ public class Lot {
 			System.out.print("<User>: Enter Password:	");
 			pwd = main_scanner.nextLine();
 			temp_user = this.db.verifyUser(username, pwd);
-			page = 3;
+			page = 2;
 				
 			if (temp_user.getUserName().equals("do not exist")) {
 				System.out.println("<User>: Invalid Username or Passward.");
@@ -314,24 +319,24 @@ public class Lot {
 			}
 			break;
 		case 3: /* Go to parking */
-			page = 4;
+			System.out.println("<Parking>: Please select parking options");
+			page = 3;
 			break;
 		case 4: /* Register for user */
-			Scanner scanner = new Scanner(System.in);
-				System.out.print("<Register>: Choose a username: ");
-				String usn = scanner.nextLine();
-				System.out.print("<Register>: Choose a password: ");
-				String p = scanner.nextLine();
-				RegisteredUser toAdd = new RegisteredUser(usn, p);
-				boolean notExists = this.db.addUser(toAdd);
-				if(notExists == false) {
-					System.out.println("User already exists, please sign in instead.");
-				} else {
-					System.out.println("Registration succeeded.");
-				}
-//				System.out.println("To create an account:");
-				page = 0;
-				break;
+			System.out.print("<Register>: Choose a username: ");
+			String usn = main_scanner.nextLine();
+			System.out.print("<Register>: Choose a password: ");
+			String p = main_scanner.nextLine();
+			RegisteredUser toAdd = new RegisteredUser(usn, p);
+			boolean notExists = this.db.addUser(toAdd);
+			if(notExists == false) {
+				System.out.println("User already exists, please sign in instead.");
+			} else {
+				System.out.println("Registration succeeded.");
+			}
+			//System.out.println("To create an account:");
+			page = 0;
+			break;
 		case 5: /* Display availability */
 			System.out.println(" ");
 			System.out.println("<Display>: Current Parking Lot has: ");
@@ -359,13 +364,68 @@ public class Lot {
 			RegisteredUser user = new RegisteredUser(username, pwd);
 			admin.addUser(user, db);
 			break;
-		case 7:
-			page = 2;
+		case 2:
+			System.out.print("<Admin>: Enter Username: ");
+			String username1 = admin_scanner.nextLine();
+			admin.removeUser(db.getUser(username1), db);
 			break;
+		case 3:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username2 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Admin Password: ");
+			String pwd2 = admin_scanner.nextLine();
+			Admin ad = new Admin(username2, pwd2);
+			admin.addAdmin(ad, db);
+			break;
+		case 4:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username3 = admin_scanner.nextLine();
+			admin.removeAdmin(db.getAdmin(username3), db);
+			break;
+		case 5:
+			System.out.println("<Admin>: Current rate is " + rate);
+			System.out.print("<Admin>: Enter new rate: ");
+			String new_rate = admin_scanner.nextLine();
+			admin.changePriceAdmin(Integer.parseInt(new_rate), lot);
+			System.out.println("Successfully changed rate, the new rate is: " + lot.getPrice());
+			break;
+		case 6:
+			System.out.print("<Admin>: Enter Username: ");
+			String username4 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Password: ");
+			String pwd4 = admin_scanner.nextLine();
+			if(db.verifyUser(username4, pwd4) == null) {
+				System.out.println("User does not exist or password does not match.");
+				break;
+			}else {
+				System.out.print("<Admin>: Enter New Password: ");
+				String new_pwd = admin_scanner.nextLine();
+				db.getUser(username4).setNewPassword(new_pwd);
+				System.out.println("<Admin>: The new password for the user is: " + db.getUser(username4).getPassword());
+				break;
+			}
+		case 7:
+			System.out.print("<Admin>: Enter Admin Username: ");
+			String username5 = admin_scanner.nextLine();
+			System.out.print("<Admin>: Enter Admin Password: ");
+			String pwd5 = admin_scanner.nextLine();
+			if(db.verifyAdmin(username5, pwd5) == null) {
+				System.out.println("Admin does not exist or password does not match.");
+				break;
+			}else {
+				System.out.print("<Admin>: Enter New Password: ");
+				String new_pwd1 = admin_scanner.nextLine();
+				db.getAdmin(username5).changePassword(new_pwd1);
+				System.out.println("<Admin>: The new password for the admin is: " + db.getAdmin(username5).getPassword());
+				break;
+			}
 		case 8:
-			page = 0;
+			page = 5;
 			break;
 		case 9:
+			page = 0;
+			break;
+		case 10:
 			page = 0;
 			temp_admin = new Admin();
 			System.out.println("You are logged out now");
@@ -389,12 +449,13 @@ public class Lot {
 				System.out.println("The system is down. Thank you for supporting our software.");
 				System.exit(0);
 			}else if(setting_input.equals("no")) {
-				page = 2;
+				page = 5;
 			}else {
 				System.out.println("Invalid Input, Shutdown is cancelled");
-				page = 2;
+				page = 5;
 			}
 			break;
+
 		case 2:
 			System.out.println("Restart will not save everything you have right now...");
 			System.out.println("You sure you want to restart the entire system? ");
@@ -415,10 +476,10 @@ public class Lot {
 				System.out.println("Please use the sudo admin to gain access");
 				System.out.println(" ");
 			}else if(setting_input.equals("no")) {
-				page = 2;
+				page = 5;
 			}else {
 				System.out.println("Invalid Input, Restart is cancelled");
-				page = 2;
+				page = 5;
 			}
 			break;	
 		case 4:
@@ -431,6 +492,58 @@ public class Lot {
 	
 	public void user_cmd(int cmd, RegisteredUser user) {
 		/* commands for page 3 sign in as user */
+		Scanner user_scanner = new Scanner(System.in);
+		switch(cmd) {
+		case 1: 
+			System.out.print("<User>: Enter your new password: ");
+			String password = user_scanner.nextLine();
+			user.setNewPassword(password);
+			break;
+		case 2: 
+			System.out.print("<User>: Enter the amount of credit you want to add:  ");
+			String credit = user_scanner.nextLine();
+			user.addCredit(Integer.parseInt(credit));
+			break;
+		case 3:
+			System.out.print("<User>: Enter your car plate: ");
+			String plate = user_scanner.nextLine();
+			System.out.print("<User>: Enter your spot type(yes for comp type, no for non com type: ");
+			String spotType = user_scanner.nextLine();
+			System.out.print("<User>: Enter you car type: ");
+			String cartype = user_scanner.nextLine();
+			if(spotType == "yes") {
+				user.addVehicle(plate, true, cartype);
+			}
+			else {
+				user.addVehicle(plate, false, cartype);
+			}
+			break;
+		case 4:
+			System.out.print("<User>: Enter your new email: ");
+			String email = user_scanner.nextLine();
+			user.setNewEmail(email);
+			break;
+		case 5:
+			user.cancel();
+			System.out.print("You have successfully canceled your membership");
+			break;
+		case 6:
+			
+			Key key = new Key(user.getUserName(), 0, mylot);
+			user.memberRegister(key);
+			System.out.print("You are a member now");
+			break;
+			
+		case 7:
+			System.out.print("Enter the car plate to begin the processing of removing specific Vechile");
+			String plateNum = user_scanner.nextLine();
+			user.removeVehicle(plateNum);
+			System.out.print("Car removed");
+			break;
+		case 8: 
+			page = 0;
+		
+		}
 	}
 	
 	public void parking_cmds(int cmd, Admin admin){
