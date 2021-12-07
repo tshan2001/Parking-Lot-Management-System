@@ -10,18 +10,21 @@ public class TicketMachine {
     Lot lot;
     int currentRate;
 
+    /* default constructor for TicketMachine */
     public TicketMachine(){
         this.currentRate = 0;
         this.database = new Database();
         this.lot = new Lot();
     }
 
+    /* TicketMachine constructor with inputs */
     public TicketMachine(Lot lot, Database database){
         this.lot = lot;
         this.database = database;
         this.currentRate = lot.getPrice();
     }
 
+    /* Verify registered user entering the lot */
     public boolean registeredEntering(Key userKey){
         if (this.database.userExists(userKey.getUserName())){
             System.out.println(userKey.getUserName() + "\nWelcome back!");
@@ -33,8 +36,11 @@ public class TicketMachine {
         }
     }
 
+    /* When first time user enters the lot */
     public Ticket oneTimeParking(int type) {
+    	/* create new ticket for one time user */
         Ticket ticket = new Ticket(this.lot, type);
+        /* regular vehicle */
         if (type == 0){
             if (this.lot.getReg() > 0) {
                 System.out.println("Your ticket ID is: " + ticket.getID() + "\n You will need this ticket or it's ID when you leave");
@@ -45,6 +51,7 @@ public class TicketMachine {
                 System.out.println("There's no regular parking spot available, please try other types");
             }
         }
+        /* compact vehicle */
         else if (type == 1){
             if (this.lot.getDisa() > 0) {
                 System.out.println(ticket.getID());
@@ -55,6 +62,7 @@ public class TicketMachine {
                 System.out.println("There's no disability parking spot available, please try other types");
             }
         }
+        /* disability vehicle */
         else if (type == 2){
             if (this.lot.getComp() > 0) {
                 System.out.println("Your ticket ID is: " + ticket.getID() + "\n You will need this ticket or it's ID when you leave");
@@ -68,6 +76,7 @@ public class TicketMachine {
         return new Ticket();
     }
 
+    /* Verify registered user leaving the lot */
     public void registeredLeave(Key key){
         if (this.database.userExists(key.getUserName())){
             System.out.println(key.getUserName() + "\nSafe Travels!");
@@ -77,6 +86,7 @@ public class TicketMachine {
         }
     }
 
+    /* When first time user leaves the lot */
     public void oneTimeLeave(String ticketID){
         Instant leaveTime = Instant.now();
         if (!this.database.ticketExists(ticketID)) {
