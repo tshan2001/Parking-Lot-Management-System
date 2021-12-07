@@ -6,6 +6,7 @@ public class Spot {
 	int type; /* 0 represent regular, 1 represent compact, 2 represent disability */
 	boolean register;
 	
+	/* default constructor */
 	public Spot() {
 		this.SpotId = -1;
 		this.availabilty = false;
@@ -28,10 +29,15 @@ public class Spot {
 		
 	}
 	
+	
+	
 	public void changeState(boolean avail) {
 		this.availabilty = avail;
 	}
-	public int getSpotId(){ return this.SpotId; }
+	
+	public int getSpotId(){ 
+		return this.SpotId; 
+	}
 
 
 }
