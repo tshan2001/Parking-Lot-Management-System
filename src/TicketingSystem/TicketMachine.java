@@ -72,6 +72,8 @@ public class TicketMachine {
         if (type == 0){
             if (this.avaliableReg > 0) {
                 this.avaliableReg--;
+                System.out.println(ticket.getID());
+                this.database.addTicket(ticket);
                 return ticket;
             }
             else{
@@ -81,6 +83,8 @@ public class TicketMachine {
         else if (type == 1){
             if (this.avaliableDisa > 0) {
                 this.avaliableDisa--;
+                System.out.println(ticket.getID());
+                this.database.addTicket(ticket);
                 return ticket;
             }
             else{
@@ -90,6 +94,8 @@ public class TicketMachine {
         else if (type == 2){
             if (this.avaliableComp > 0) {
                 this.avaliableComp--;
+                System.out.println(ticket.getID());
+                this.database.addTicket(ticket);
                 return ticket;                
             }
             else{
@@ -116,14 +122,21 @@ public class TicketMachine {
         }
     }
 
-    public void oneTimeLeave(Ticket ticket){
+    public void oneTimeLeave(String ticketID){
         Instant leaveTime = Instant.now();
+        if (!this.database.ticketExists(ticketID)) {
+            System.out.println("Your ticket is invalid, please try again");
+            return;
+        }
+        Ticket ticket = this.database.getTicket(ticketID);
+        this.lot.freeSpotOneTime(ticket.getSpot().getSpotId());
         Instant entranceTime = ticket.start;
         int price = ticket.pricePer15Min;
         Duration parkingTime = Duration.between(entranceTime, leaveTime);
         int timeIn15 = (int) parkingTime.toMinutes() / 15;
         int finalPrice = price * timeIn15;
         System.out.println("Your total amount due is: " + Integer.toString(finalPrice) + " \nPlease insert your credit card");
+        System.out.println("Thank you for parking with us!");
     }
     
 }
