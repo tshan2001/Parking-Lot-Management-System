@@ -530,6 +530,7 @@ public class Lot {
 			System.out.println("You are a member now.");
 			break;
 		case 5:
+			temp_user = new RegisteredUser();
 			page = 0;
 			System.out.println("Returning to main page...");
 		
