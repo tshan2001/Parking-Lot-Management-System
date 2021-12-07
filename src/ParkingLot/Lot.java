@@ -18,9 +18,9 @@ public class Lot {
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
 			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n",
 			"",
-		"<User>: Entering Comands for next operation: \n	1. Change password \n 	2. Add Credit \n" +  
-			"	3. Add Vechicle \n	4. Change email \n	5. Cancel MemberShip \n	6. Membership register \n	7. Remove Vehicle \n  " +
-			"	8. Back to main \n", 
+		"<User>: Entering Comands for next operation: \n	1. Change password \n"
+			+"	2. Change email \n	3. Cancel MemberShip \n	4. Membership register \n" 
+			+"	5. Back to main \n",  
 		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
 					+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
 					+ "5. Display current lot availability \n 	6. Return to main page \n",
@@ -326,11 +326,14 @@ public class Lot {
 			page = 4;
 			break;
 		case 4: /* Register for user */
+			System.out.print("<Register>: Enter your email: ");
+			String email = main_scanner.nextLine();
 			System.out.print("<Register>: Choose a username: ");
 			String usn = main_scanner.nextLine();
 			System.out.print("<Register>: Choose a password: ");
 			String p = main_scanner.nextLine();
 			RegisteredUser toAdd = new RegisteredUser(usn, p);
+			toAdd.setNewEmail(email);
 			boolean notExists = this.db.addUser(toAdd);
 			if(notExists == false) {
 				System.out.println(" - - - - - - - - - - - - - - ");
@@ -504,46 +507,20 @@ public class Lot {
 			user.setNewPassword(password);
 			break;
 		case 2: 
-			System.out.print("<User>: Enter the amount of credit you want to add:  ");
-			String credit = user_scanner.nextLine();
-			user.addCredit(Integer.parseInt(credit));
-			break;
-		case 3:
-			System.out.print("<User>: Enter your car plate: ");
-			String plate = user_scanner.nextLine();
-			System.out.print("<User>: Enter your spot type(yes for comp type, no for non com type: ");
-			String spotType = user_scanner.nextLine();
-			System.out.print("<User>: Enter you car type: ");
-			char cartype = user_scanner.nextLine().charAt(0);
-			if(spotType == "yes") {
-				user.addVehicle(plate, true, "Reg");
-			}
-			else {
-				user.addVehicle(plate, false, "Reg");
-			}
-			break;
-		case 4:
 			System.out.print("<User>: Enter your new email: ");
 			String email = user_scanner.nextLine();
 			user.setNewEmail(email);
 			break;
-		case 5:
+		case 3:
 			user.cancel();
 			System.out.print("You have successfully canceled your membership");
 			break;
-		case 6:
+		case 4:
 			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
 			System.out.print("You are a member now");
 			break;
-			
-		case 7:
-			System.out.print("Enter the car plate to begin the processing of removing specific Vechile");
-			String plateNum = user_scanner.nextLine();
-			user.removeVehicle(plateNum);
-			System.out.print("Car removed");
-			break;
-		case 8: 
+		case 5:
 			page = 0;
 		
 		}
