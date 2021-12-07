@@ -533,7 +533,9 @@ public class Lot {
 		Scanner parking_scanner = new Scanner(System.in);
 		switch (cmd) {
 			case 1:
-				System.out.print("<Parking>: To enter the lot, please enter your username:");
+				System.out.println(" ");
+				System.out.println("<Parking>: To enter the lot");
+				System.out.print("           please enter your username: ");
 				String user = parking_scanner.nextLine();
 				Key userkey = this.db.getUser(user).getMemberKey();
 				if (userkey == null) {
@@ -546,20 +548,22 @@ public class Lot {
 			case 2:
 				System.out.println(" ");
 				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n 	0. - Regular \n 	1. - Compact\n 	2. - Disability \n");
-				System.out.print(" Select your spot: ");
+				System.out.print("           Select your spot: ");
 				int type = parking_scanner.nextInt();
 				this.machine.oneTimeParking(type);
 				break;
 			case 3:
 				System.out.println(" ");
-				System.out.println("<Parking>: To leave the lot, , please enter your username:");
+				System.out.println("<Parking>: To leave the lot");
+				System.out.print("           please enter your username: ");
 				String userLeaving = parking_scanner.nextLine();
 				Key key = this.db.getUser(userLeaving).getMemberKey();
 				this.machine.registeredLeave(key);
 				break;
 			case 4:
 				System.out.println(" ");
-				System.out.println("<Parking>: To leave the lot, please scan your ticket or enter your ticket's ID");
+				System.out.println("<Parking>: To leave the lot, ");
+				System.out.print("           please scan your ticket or enter your username: ");
 				String ticketID = parking_scanner.nextLine();
 				this.machine.oneTimeLeave(ticketID);
 				break;
