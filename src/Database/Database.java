@@ -1,11 +1,13 @@
 package Database;
 import UserSystem.RegisteredUser;
+import TicketingSystem.Ticket;
 import java.util.HashMap;
 import UserSystem.Admin;
 
 public class Database {
 	HashMap<String,Admin> AdminDatabase;
 	HashMap<String,RegisteredUser> UserDatabase;
+	HashMap<String,Ticket> TicketDatabase;
 	
 	String name;
 	
@@ -25,6 +27,7 @@ public class Database {
 		//Initialize two database
 		AdminDatabase = new HashMap<String,Admin>();
 		UserDatabase = new HashMap<String,RegisteredUser>();
+		TicketDatabase = new HashMap<String,Ticket>();
 		
 		//Add first admin to the AdminDataBase
 		Admin sudo = new Admin(sudo_acc,sudo_pwd);
@@ -152,6 +155,43 @@ public class Database {
 		return new Admin();
 	}
 
+
+	/* --- Ticket Database Functions --- */
+	public HashMap<String,Ticket> getTickets(){
+		return TicketDatabase;
+	}
+
+	public Ticket getTicket(String TicketID) {
+		if(TicketDatabase.containsKey(TicketID)) {
+			return TicketDatabase.get(TicketID);
+		}else {
+			return new Ticket();
+		}
+	}
+
+	public boolean ticketExists(String ticketToCheck) {
+		return TicketDatabase.containsKey(ticketToCheck);
+	}
+
+	public boolean addTicket(Ticket ticket) {
+		if(this.ticketExists(ticket.getID())) {
+			return false;
+		}
+		this.TicketDatabase.put(ticket.getID(), ticket);
+		return true;
+	}
+
+	public boolean removeTicket(Ticket ticket) {
+		if(ticket == null) {
+			return false;
+		}
+		if(this.TicketDatabase.containsKey(ticket.getID())) {
+			this.TicketDatabase.remove(ticket.getID());
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 	/* --- Database Class Functions --- */
 	public boolean adminDatabaseIsEmpty() {
