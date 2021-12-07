@@ -490,6 +490,7 @@ public class Lot {
 			System.out.print("<User>: Enter your new password: ");
 			String password = user_scanner.nextLine();
 			user.setNewPassword(password);
+			System.out.println(" ");
 			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: Password changed succussfully.");
 			break;
@@ -497,18 +498,17 @@ public class Lot {
 			System.out.print("<User>: Enter your new email: ");
 			String email = user_scanner.nextLine();
 			user.setNewEmail(email);
+			System.out.println(" ");
 			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: Email changed succussfully.");
 			break;
 		case 3:
 			user.cancel();
-			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: You have successfully canceled your membership.");
 			break;
 		case 4:
 			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
-			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: You are a member now.");
 			break;
 		case 5:
@@ -518,15 +518,11 @@ public class Lot {
 			break;
 		case 6:
 			temp_user = new RegisteredUser();
-			System.out.println(" ");
-			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<User>: You are logged out now");
 			page = 0;
 			break;
 		default:
 			page = 2;
-			System.out.println(" ");
-			System.out.println(" - - - - - - - - - - - - - - ");
 			System.out.println("<Error>: Invalid command, please try again. ");
 			break;
 		}
@@ -542,7 +538,6 @@ public class Lot {
 				Key userkey = this.db.getUser(user).getMemberKey();
 				if (userkey == null) {
 					System.out.println(" ");
-					System.out.println(" - - - - - - - - - - - - - - ");
 					System.out.println("<Parking>:  User not recogonized, please try again");
 					break;
 				}
@@ -550,15 +545,13 @@ public class Lot {
 				break;
 			case 2:
 				System.out.println(" ");
-				System.out.println(" - - - - - - - - - - - - - - ");
-				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n 	0. - Regular \n 	1. - Disability\n 	2. - Compact \n");
+				System.out.println("<Parking>: To enter the lot, Please select a spot type that you need to retrieve a ticket \n 	0. - Regular \n 	1. - Compact\n 	2. - Disability \n");
 				System.out.print(" Select your spot: ");
 				int type = parking_scanner.nextInt();
 				this.machine.oneTimeParking(type);
 				break;
 			case 3:
 				System.out.println(" ");
-				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: To leave the lot, , please enter your username:");
 				String userLeaving = parking_scanner.nextLine();
 				Key key = this.db.getUser(userLeaving).getMemberKey();
@@ -566,19 +559,17 @@ public class Lot {
 				break;
 			case 4:
 				System.out.println(" ");
-				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: To leave the lot, please scan your ticket or enter your ticket's ID");
 				String ticketID = parking_scanner.nextLine();
 				this.machine.oneTimeLeave(ticketID);
 				break;
 			case 5:
-				System.out.println(" ");
-				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Parking>: Spots Display");
 				System.out.println(" ");
 				System.out.println("       Available Regular Spots: " + this.num_reg + "\n");
-				System.out.println("       Available Disability Spots: " + this.num_disa + "\n");
 				System.out.println("       Available Compact Spots: " + this.num_comp + "\n");
+				System.out.println("       Available Disability Spots: " + this.num_disa + "\n");
+
 				break;
 			case 6:
 				page = 0;
@@ -587,8 +578,6 @@ public class Lot {
 				break;
 			default:
 				page = 3;
-				System.out.println(" ");
-				System.out.println(" - - - - - - - - - - - - - - ");
 				System.out.println("<Error>: Invalid command, please try again. ");
 				break;
 
