@@ -505,20 +505,26 @@ public class Lot {
 			System.out.print("<User>: Enter your new password: ");
 			String password = user_scanner.nextLine();
 			user.setNewPassword(password);
+			System.out.println(" - - - - - - - - - - - - - - ");
+			System.out.println("Password changed succussfully.");
 			break;
 		case 2: 
 			System.out.print("<User>: Enter your new email: ");
 			String email = user_scanner.nextLine();
 			user.setNewEmail(email);
+			System.out.println(" - - - - - - - - - - - - - - ");
+			System.out.println("Email changed succussfully.");
 			break;
 		case 3:
 			user.cancel();
-			System.out.print("You have successfully canceled your membership");
+			System.out.println(" - - - - - - - - - - - - - - ");
+			System.out.println("You have successfully canceled your membership.");
 			break;
 		case 4:
 			Key key = new Key(user, 0, this);
 			user.memberRegister(key);
-			System.out.println("You are a member now");
+			System.out.println(" - - - - - - - - - - - - - - ");
+			System.out.println("You are a member now.");
 			break;
 		case 5:
 			page = 0;
