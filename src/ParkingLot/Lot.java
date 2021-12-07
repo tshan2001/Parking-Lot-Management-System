@@ -10,22 +10,20 @@ import UserSystem.RegisteredUser;;
 
 public class Lot {
 	public static int page = 0;
-	//option display pages
 	public static String[] cmds = {
 		"<Main Page>: Please enter the option number: \n	"
 			+ "1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. "
 			+ "Register for User \n 	5. Display Parking Lot\n",
 		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
-			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Back to main\n",
-			"",
-		"<User>: Entering Comands for next operation: \n	1. Change password \n"
-			+"	2. Change email \n	3. Cancel MemberShip \n	4. Membership register \n" 
-			+"	5. Back to main \n",  
+			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n"
+			+ " 	9. Log out\n",
+		"<User>: Entering Comands for next operation: \n 1. Change password \n  2. Add Credit \n  
+			3. Add Vechicle \n  4. Change email \n  5. Cancel MemberShip \n  6. Membership register \n  7. Remove Vehicle \n  
+			8. Back to main \n","<User>: 1. \n 	2. \n" , 
 		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
-					+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
-					+ "5. Display current lot availability \n 	6. Return to main page \n",
-		
+			+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
+			+ "5. Display current lot availability \n 	6. Return to main page \n",
 		"<Register>: ",
 		"<Advanced Setting>: Entering Commands for next operation:\n 	1. Sudo Shut-down\n 	"
 			+ "2. Sudo Restart\n 	3. Start New Lot\n 	4. Back to Admin page", 
@@ -134,7 +132,6 @@ public class Lot {
 		this.rate = price;
 	}
 	
-	/* Return total number of available spots */
 	public int numAvail() {
 		return (this.num_reg + this.num_disa + this.num_comp);
 	}
@@ -203,7 +200,7 @@ public class Lot {
 				}
 			}
 			break;
-		case 2:
+		case 1:
 			for (int i=MAXSIZE_Reg; i<(MAXSIZE_Reg+MAXSIZE_Disa);i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
 					this.ParkingSpots[i].availabilty = false;
@@ -212,7 +209,7 @@ public class Lot {
 				}
 			}
 			break;
-		case 1:
+		case 2:
 			for (int i=(MAXSIZE_Reg+MAXSIZE_Disa); i<MAXS;i++) {
 				if (this.ParkingSpots[i].availabilty == true) {
 					this.ParkingSpots[i].availabilty = false;
@@ -314,18 +311,16 @@ public class Lot {
 			System.out.print("<User>: Enter Password:	");
 			pwd = main_scanner.nextLine();
 			temp_user = this.db.verifyUser(username, pwd);
+			page = 2;
+				
 			if (temp_user.getUserName().equals("do not exist")) {
 				System.out.println("<User>: Invalid Username or Passward.");
 				page = 0;
-			} else {
-				page = 3;
-//				System.out.println("Jumped to page 3");
 			}
-			
 			break;
 		case 3: /* Go to parking */
 			System.out.println("<Parking>: Please select parking options");
-			page = 4;
+			page = 3;
 			break;
 		case 4: /* Register for user */
 			System.out.print("<Register>: Enter your email: ");
@@ -435,12 +430,18 @@ public class Lot {
 				System.out.println("<Admin>: The new password for the admin is: " + db.getAdmin(username5).getPassword());
 				break;
 			}
-		/* back to main page */
 		case 8:
-			temp_admin = new Admin();
-			page = 0;
-			System.out.println("Returning to main page...");
+			page = 5;
 			break;
+		case 9:
+			page = 0;
+			break;
+		case 10:
+			page = 0;
+			temp_admin = new Admin();
+			System.out.println("You are logged out now");
+			break;
+
 		}
 		
 
@@ -585,11 +586,14 @@ public class Lot {
 	}
 	
 	
+	public void register_cmd(int cmd) {
+		/* commands for page 5 register page */
+		
+	}
 	
 	public static void main(String args[]) {
 		Lot mylot = new Lot();
 		
-		/* Initial printout when starting the program */
 		System.out.println("Default parking lot and database has generated");
 		System.out.println(" ");
 		System.out.println("The default admin Username is " + mylot.db.getSudoID());
@@ -620,7 +624,7 @@ public class Lot {
 				mylot.parking_cmds(cmd, temp_admin);
 				break;
 			case 5: /* At Register page */
-//				mylot.register_cmd(cmd);
+				mylot.register_cmd(cmd);
 				break;
 			}
 			System.out.println(" - - - - - - - - - - - - - - ");
