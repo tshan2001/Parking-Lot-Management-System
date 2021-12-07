@@ -118,6 +118,8 @@ public class TicketMachine {
         Duration parkingTime = Duration.between(entranceTime, leaveTime);
         int timeIn15 = (int) parkingTime.toMinutes() / 15;
         int finalPrice = price * timeIn15;
+	System.out.println("");
+	System.out.println(" - - - - - - - - - - - - - - ");
         System.out.println("<Parking>: Your total amount due is: " + Integer.toString(finalPrice));
         System.out.println(" ");
         System.out.println("           Please insert your credit card");
