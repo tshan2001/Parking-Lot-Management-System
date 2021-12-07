@@ -14,6 +14,7 @@ public class Ticket {
     int pricePer15Min;
     Spot spot;
 
+    /* default constructor for Ticket */
     public Ticket() {
         this.ID = "00000000";
         this.start = Instant.now();
@@ -22,6 +23,7 @@ public class Ticket {
         this.spot = new Spot();
     }
 
+    /* Ticket constructor with inputs */
     public Ticket(Lot lot, int type) {
         Random random = new Random();
         int temp = 0;
