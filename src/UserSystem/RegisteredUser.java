@@ -14,6 +14,7 @@ public class RegisteredUser {
 	Key Key;
 
 
+	/* default constructor for user */
 	public RegisteredUser() {
 		this.disability = false;
 		this.username = "do not exist";
@@ -23,12 +24,14 @@ public class RegisteredUser {
 		this.Key = null;
 	}
 
+	/* user constructor with input values */
 	public RegisteredUser(String usern, String pwd) {
 		this.username = usern;
 		this.password = pwd;
 	}
 
-	public RegisteredUser(String usern, String pwd, String email, int unit, boolean disa, int credit) {
+	/* user constructor with input values */
+	public RegisteredUser(String usern, String pwd, String email, boolean disa) {
 		this.disability = disa;
 		this.username = usern;
 		this.password = pwd;
@@ -83,8 +86,5 @@ public class RegisteredUser {
 	public boolean isMember(){
 		return this.membership;
 	}
-
-
-
 	
 }
