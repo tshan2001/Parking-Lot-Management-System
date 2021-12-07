@@ -557,6 +557,10 @@ public class Lot {
 				System.out.println("To enter the lot, Please scan your Key fob or enter your fob ID");
 				String user = parking_scanner.nextLine();
 				Key userkey = this.db.getUser(user).getMemberKey();
+				if (userkey == null) {
+					System.out.println("User not recogonized, please try again");
+					break;
+				}
 				this.machine.registeredEntering(userkey);
 				break;
 			case 2:
@@ -582,6 +586,10 @@ public class Lot {
 				break;
 			case 6:
 				page = 0;
+				break;
+			default:
+				page = 0;
+				System.out.println("Command not recogonized");
 				break;
 
 		}
