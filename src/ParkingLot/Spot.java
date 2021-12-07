@@ -31,6 +31,7 @@ public class Spot {
 	public void changeState(boolean avail) {
 		this.availabilty = avail;
 	}
+	public int getSpotId(){ return this.SpotId; }
 
 
 }
