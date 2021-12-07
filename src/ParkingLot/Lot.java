@@ -18,9 +18,9 @@ public class Lot {
 		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
 			+ "5. Change rate\n 	6. Update User Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n",
-		"<User>: Entering Comands for next operation:\n 	1. Change password\n 	2. Add Credit\n" + 
-			" 	3. Add Vechicle\n 	4. Change email\n 	5. Cancel MemberShip\n 	6. Membership register\n 	7. Remove Vehicle \n " 
-			+ " 	8. Back to main \n 	9. Log Out", 
+		"<User>: Entering Comands for next operation: \n	1. Change password \n"
+			+"	2. Change email \n	3. Cancel MemberShip \n	4. Membership register \n" 
+			+"	5. Back to main \n	6. Log Out", 
 		"<Parking>: Entering Commands for next \n 	1. Registered User parking \n 	"
 			+ "2. One time parking \n 	3. Registered user leaving \n 	4. One time parking leaving \n 	"
 			+ "5. Display current lot availability \n 	6. Return to main page \n",
@@ -504,13 +504,10 @@ public class Lot {
 			System.out.println("You are a member now.");
 			break;
 		case 5:
-			temp_user = new RegisteredUser();
 			page = 0;
 			System.out.println("Returning to main page...");
-		case 8:
-			page = 0;
-			break;
-		case 9:
+				
+		case 6:
 			temp_user = new RegisteredUser();
 			System.out.println("<User>: You are logged out now");
 			page = 0;
