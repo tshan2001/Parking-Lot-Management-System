@@ -10,13 +10,14 @@ import UserSystem.RegisteredUser;;
 
 public class Lot {
 	public static int page = 0;
+	//option display pages
 	public static String[] cmds = {
 		"<Main Page>: Please enter the option number: \n	"
 			+ "1: Sign in As Admin \n	2: Sign in As User \n	3. Parking \n	4. "
 			+ "Register for User \n 	5. Display Parking Lot\n",
 		"<Admin>: Entering Comands for next operation: \n 	1. Add User \n 	"
 			+ "2. Remove User \n 	3. Add Admin\n 	4. Remove Admin\n 	"
-			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Advanced Setting\n 	9. Back to main\n 	10. Log out\n",
+			+ "5. Change rate\n 	6. Update Password\n 	7. Update Admin Password\n 	8. Back to main\n",
 			"",
 		"<User>: Entering Comands for next operation: \n	1. Change password \n"
 			+"	2. Change email \n	3. Cancel MemberShip \n	4. Membership register \n" 
@@ -133,6 +134,7 @@ public class Lot {
 		this.rate = price;
 	}
 	
+	/* Return total number of available spots */
 	public int numAvail() {
 		return (this.num_reg + this.num_disa + this.num_comp);
 	}
@@ -364,6 +366,7 @@ public class Lot {
 		Scanner admin_scanner = new Scanner(System.in);
 		switch (cmd) {
 		case 1:
+			/* take input for user information to add */
 			System.out.print("<Admin>: Enter Username:	");
 			String username = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Password:	");
@@ -372,11 +375,13 @@ public class Lot {
 			admin.addUser(user, db);
 			break;
 		case 2:
+			/* take input for user information to remove */
 			System.out.print("<Admin>: Enter Username: ");
 			String username1 = admin_scanner.nextLine();
 			admin.removeUser(db.getUser(username1), db);
 			break;
 		case 3:
+			/* take input for admin information to add */
 			System.out.print("<Admin>: Enter Admin Username: ");
 			String username2 = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password: ");
@@ -385,11 +390,13 @@ public class Lot {
 			admin.addAdmin(ad, db);
 			break;
 		case 4:
+			/* take input for admin information to remove */
 			System.out.print("<Admin>: Enter Admin Username: ");
 			String username3 = admin_scanner.nextLine();
 			admin.removeAdmin(db.getAdmin(username3), db);
 			break;
 		case 5:
+			/* change rate */
 			System.out.println("<Admin>: Current rate is " + rate);
 			System.out.print("<Admin>: Enter new rate: ");
 			String new_rate = admin_scanner.nextLine();
@@ -397,6 +404,7 @@ public class Lot {
 			System.out.println("Successfully changed rate, the new rate is: " + this.getPrice());
 			break;
 		case 6:
+			/* update password for specified user */
 			System.out.print("<Admin>: Enter Username: ");
 			String username4 = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Password: ");
@@ -412,6 +420,7 @@ public class Lot {
 				break;
 			}
 		case 7:
+			/* update password for specified admin */
 			System.out.print("<Admin>: Enter Admin Username: ");
 			String username5 = admin_scanner.nextLine();
 			System.out.print("<Admin>: Enter Admin Password: ");
@@ -426,18 +435,12 @@ public class Lot {
 				System.out.println("<Admin>: The new password for the admin is: " + db.getAdmin(username5).getPassword());
 				break;
 			}
+		/* back to main page */
 		case 8:
-			page = 5;
-			break;
-		case 9:
-			page = 0;
-			break;
-		case 10:
-			page = 0;
 			temp_admin = new Admin();
-			System.out.println("You are logged out now");
+			page = 0;
+			System.out.println("Returning to main page...");
 			break;
-
 		}
 		
 
@@ -528,6 +531,7 @@ public class Lot {
 			break;
 		case 5:
 			page = 0;
+			System.out.println("Returning to main page...");
 		
 		}
 	}
@@ -569,6 +573,7 @@ public class Lot {
 				break;
 			case 6:
 				page = 0;
+				System.out.println("Returning to main page...");
 				break;
 			default:
 				page = 0;
@@ -579,14 +584,11 @@ public class Lot {
 	}
 	
 	
-//	public void register_cmd(int cmd) {
-//		/* commands for page 5 register page */
-//		
-//	}
 	
 	public static void main(String args[]) {
 		Lot mylot = new Lot();
 		
+		/* Initial printout when starting the program */
 		System.out.println("Default parking lot and database has generated");
 		System.out.println(" ");
 		System.out.println("The default admin Username is " + mylot.db.getSudoID());
