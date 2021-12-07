@@ -84,6 +84,7 @@ public class TicketMachine {
             return;
         }
         Ticket ticket = this.database.getTicket(ticketID);
+        this.database.removeTicket(ticket);
         this.lot.freeSpotOneTime(ticket.getSpot().getSpotId());
         Instant entranceTime = ticket.start;
         int price = ticket.pricePer15Min;
